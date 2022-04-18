@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/g/CLionProjects/Ros_test/src/cmake-build-debug/devel/setup.sh
