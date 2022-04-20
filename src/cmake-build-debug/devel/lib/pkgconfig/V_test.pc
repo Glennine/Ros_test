@@ -1,0 +1,8 @@
+prefix=/home/g/CLionProjects/Ros_test/src/cmake-build-debug/devel
+
+Name: V_test
+Description: Description of V_test
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
