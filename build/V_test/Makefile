@@ -56,18 +56,6 @@ CMAKE_BINARY_DIR = /home/g/CLionProjects/Ros_test/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -79,28 +67,6 @@ install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -135,6 +101,40 @@ test/fast: test
 
 .PHONY : test/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /home/g/CLionProjects/Ros_test/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/g/CLionProjects/Ros_test/build/CMakeFiles /home/g/CLionProjects/Ros_test/build/V_test/CMakeFiles/progress.marks
@@ -168,46 +168,289 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-V_test/CMakeFiles/Ros_test.dir/rule:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/Ros_test.dir/rule
-.PHONY : V_test/CMakeFiles/Ros_test.dir/rule
+V_test/CMakeFiles/V_test_node.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/V_test_node.dir/rule
+.PHONY : V_test/CMakeFiles/V_test_node.dir/rule
 
 # Convenience name for target.
-Ros_test: V_test/CMakeFiles/Ros_test.dir/rule
+V_test_node: V_test/CMakeFiles/V_test_node.dir/rule
 
-.PHONY : Ros_test
+.PHONY : V_test_node
 
 # fast build rule for target.
-Ros_test/fast:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/Ros_test.dir/build.make V_test/CMakeFiles/Ros_test.dir/build
-.PHONY : Ros_test/fast
+V_test_node/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test_node.dir/build.make V_test/CMakeFiles/V_test_node.dir/build
+.PHONY : V_test_node/fast
 
-main.o: main.cpp.o
+# Convenience name for target.
+V_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+.PHONY : V_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 
-.PHONY : main.o
+# Convenience name for target.
+std_msgs_generate_messages_py: V_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+
+.PHONY : std_msgs_generate_messages_py
+
+# fast build rule for target.
+std_msgs_generate_messages_py/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/std_msgs_generate_messages_py.dir/build.make V_test/CMakeFiles/std_msgs_generate_messages_py.dir/build
+.PHONY : std_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+.PHONY : V_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_nodejs: V_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : std_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+std_msgs_generate_messages_nodejs/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make V_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
+.PHONY : std_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+.PHONY : V_test/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_cpp: V_test/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+
+.PHONY : roscpp_generate_messages_cpp
+
+# fast build rule for target.
+roscpp_generate_messages_cpp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make V_test/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+.PHONY : roscpp_generate_messages_cpp/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+.PHONY : V_test/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_eus: V_test/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+
+.PHONY : roscpp_generate_messages_eus
+
+# fast build rule for target.
+roscpp_generate_messages_eus/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/roscpp_generate_messages_eus.dir/build.make V_test/CMakeFiles/roscpp_generate_messages_eus.dir/build
+.PHONY : roscpp_generate_messages_eus/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
+.PHONY : V_test/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_nodejs: V_test/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_nodejs/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make V_test/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
+.PHONY : rosgraph_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+.PHONY : V_test/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_lisp: V_test/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : std_msgs_generate_messages_lisp
+
+# fast build rule for target.
+std_msgs_generate_messages_lisp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make V_test/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+.PHONY : std_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/V_test.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/V_test.dir/rule
+.PHONY : V_test/CMakeFiles/V_test.dir/rule
+
+# Convenience name for target.
+V_test: V_test/CMakeFiles/V_test.dir/rule
+
+.PHONY : V_test
+
+# fast build rule for target.
+V_test/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test.dir/build.make V_test/CMakeFiles/V_test.dir/build
+.PHONY : V_test/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/roscpp_generate_messages_py.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/roscpp_generate_messages_py.dir/rule
+.PHONY : V_test/CMakeFiles/roscpp_generate_messages_py.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_py: V_test/CMakeFiles/roscpp_generate_messages_py.dir/rule
+
+.PHONY : roscpp_generate_messages_py
+
+# fast build rule for target.
+roscpp_generate_messages_py/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/roscpp_generate_messages_py.dir/build.make V_test/CMakeFiles/roscpp_generate_messages_py.dir/build
+.PHONY : roscpp_generate_messages_py/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+.PHONY : V_test/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_eus: V_test/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+
+.PHONY : std_msgs_generate_messages_eus
+
+# fast build rule for target.
+std_msgs_generate_messages_eus/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make V_test/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
+.PHONY : V_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_nodejs: V_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule
+
+.PHONY : roscpp_generate_messages_nodejs
+
+# fast build rule for target.
+roscpp_generate_messages_nodejs/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make V_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
+.PHONY : roscpp_generate_messages_nodejs/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : V_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_cpp: V_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make V_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+.PHONY : V_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_cpp: V_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : std_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make V_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
+.PHONY : V_test/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_eus: V_test/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_eus
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_eus/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make V_test/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
+.PHONY : rosgraph_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+.PHONY : V_test/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_lisp: V_test/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_lisp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_lisp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make V_test/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+.PHONY : V_test/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_lisp: V_test/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+.PHONY : roscpp_generate_messages_lisp
+
+# fast build rule for target.
+roscpp_generate_messages_lisp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make V_test/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+.PHONY : roscpp_generate_messages_lisp/fast
+
+# Convenience name for target.
+V_test/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 V_test/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+.PHONY : V_test/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_py: V_test/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_py
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_py/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make V_test/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+.PHONY : rosgraph_msgs_generate_messages_py/fast
+
+src/test_node.o: src/test_node.cpp.o
+
+.PHONY : src/test_node.o
 
 # target to build an object file
-main.cpp.o:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/Ros_test.dir/build.make V_test/CMakeFiles/Ros_test.dir/main.cpp.o
-.PHONY : main.cpp.o
+src/test_node.cpp.o:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test_node.dir/build.make V_test/CMakeFiles/V_test_node.dir/src/test_node.cpp.o
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test.dir/build.make V_test/CMakeFiles/V_test.dir/src/test_node.cpp.o
+.PHONY : src/test_node.cpp.o
 
-main.i: main.cpp.i
+src/test_node.i: src/test_node.cpp.i
 
-.PHONY : main.i
+.PHONY : src/test_node.i
 
 # target to preprocess a source file
-main.cpp.i:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/Ros_test.dir/build.make V_test/CMakeFiles/Ros_test.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/test_node.cpp.i:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test_node.dir/build.make V_test/CMakeFiles/V_test_node.dir/src/test_node.cpp.i
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test.dir/build.make V_test/CMakeFiles/V_test.dir/src/test_node.cpp.i
+.PHONY : src/test_node.cpp.i
 
-main.s: main.cpp.s
+src/test_node.s: src/test_node.cpp.s
 
-.PHONY : main.s
+.PHONY : src/test_node.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/Ros_test.dir/build.make V_test/CMakeFiles/Ros_test.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/test_node.cpp.s:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test_node.dir/build.make V_test/CMakeFiles/V_test_node.dir/src/test_node.cpp.s
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f V_test/CMakeFiles/V_test.dir/build.make V_test/CMakeFiles/V_test.dir/src/test_node.cpp.s
+.PHONY : src/test_node.cpp.s
 
 # Help Target
 help:
@@ -215,17 +458,33 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... install"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... Ros_test"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... V_test_node"
+	@echo "... std_msgs_generate_messages_py"
+	@echo "... std_msgs_generate_messages_nodejs"
+	@echo "... roscpp_generate_messages_cpp"
+	@echo "... roscpp_generate_messages_eus"
+	@echo "... rosgraph_msgs_generate_messages_nodejs"
+	@echo "... list_install_components"
+	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... V_test"
+	@echo "... roscpp_generate_messages_py"
+	@echo "... install"
+	@echo "... std_msgs_generate_messages_eus"
+	@echo "... roscpp_generate_messages_nodejs"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... install/strip"
+	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... rosgraph_msgs_generate_messages_eus"
+	@echo "... rosgraph_msgs_generate_messages_lisp"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... rosgraph_msgs_generate_messages_py"
+	@echo "... src/test_node.o"
+	@echo "... src/test_node.i"
+	@echo "... src/test_node.s"
 .PHONY : help
 
 

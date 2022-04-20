@@ -300,6 +300,123 @@ EMPY_EXECUTABLE:FILEPATH=EMPY_EXECUTABLE-NOTFOUND
 //Empy script
 EMPY_SCRIPT:STRING=/usr/lib/python3/dist-packages/em.py
 
+//The directory containing a CMake configuration file for Eigen3.
+Eigen3_DIR:PATH=/usr/local/share/eigen3/cmake
+
+//The directory containing a CMake configuration file for FMT.
+FMT_DIR:PATH=/usr/local/lib/cmake/fmt
+
+//Path to a library.
+G2O_CLI_LIBRARY:FILEPATH=/usr/local/lib/libg2o_cli.so
+
+//Path to a library.
+G2O_CLI_LIBRARY_DEBUG:FILEPATH=G2O_CLI_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_CORE_LIBRARY:FILEPATH=/usr/local/lib/libg2o_core.so
+
+//Path to a library.
+G2O_CORE_LIBRARY_DEBUG:FILEPATH=G2O_CORE_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a file.
+G2O_INCLUDE_DIR:PATH=/usr/local/include
+
+//Path to a library.
+G2O_SOLVER_CHOLMOD:FILEPATH=/usr/local/lib/libg2o_solver_cholmod.so
+
+//Path to a library.
+G2O_SOLVER_CHOLMOD_DEBUG:FILEPATH=G2O_SOLVER_CHOLMOD_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_CSPARSE:FILEPATH=/usr/local/lib/libg2o_solver_csparse.so
+
+//Path to a library.
+G2O_SOLVER_CSPARSE_DEBUG:FILEPATH=G2O_SOLVER_CSPARSE_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_CSPARSE_EXTENSION:FILEPATH=/usr/local/lib/libg2o_csparse_extension.so
+
+//Path to a library.
+G2O_SOLVER_CSPARSE_EXTENSION_DEBUG:FILEPATH=G2O_SOLVER_CSPARSE_EXTENSION_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_DENSE:FILEPATH=/usr/local/lib/libg2o_solver_dense.so
+
+//Path to a library.
+G2O_SOLVER_DENSE_DEBUG:FILEPATH=G2O_SOLVER_DENSE_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_EIGEN:FILEPATH=/usr/local/lib/libg2o_solver_eigen.so
+
+//Path to a library.
+G2O_SOLVER_EIGEN_DEBUG:FILEPATH=G2O_SOLVER_EIGEN_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_PCG:FILEPATH=/usr/local/lib/libg2o_solver_pcg.so
+
+//Path to a library.
+G2O_SOLVER_PCG_DEBUG:FILEPATH=G2O_SOLVER_PCG_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_SLAM2D_LINEAR:FILEPATH=/usr/local/lib/libg2o_solver_slam2d_linear.so
+
+//Path to a library.
+G2O_SOLVER_SLAM2D_LINEAR_DEBUG:FILEPATH=G2O_SOLVER_SLAM2D_LINEAR_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_SOLVER_STRUCTURE_ONLY:FILEPATH=/usr/local/lib/libg2o_solver_structure_only.so
+
+//Path to a library.
+G2O_SOLVER_STRUCTURE_ONLY_DEBUG:FILEPATH=G2O_SOLVER_STRUCTURE_ONLY_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_STUFF_LIBRARY:FILEPATH=/usr/local/lib/libg2o_stuff.so
+
+//Path to a library.
+G2O_STUFF_LIBRARY_DEBUG:FILEPATH=G2O_STUFF_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_DATA:FILEPATH=/usr/local/lib/libg2o_types_data.so
+
+//Path to a library.
+G2O_TYPES_DATA_DEBUG:FILEPATH=G2O_TYPES_DATA_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_ICP:FILEPATH=/usr/local/lib/libg2o_types_icp.so
+
+//Path to a library.
+G2O_TYPES_ICP_DEBUG:FILEPATH=G2O_TYPES_ICP_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_SBA:FILEPATH=/usr/local/lib/libg2o_types_sba.so
+
+//Path to a library.
+G2O_TYPES_SBA_DEBUG:FILEPATH=G2O_TYPES_SBA_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_SCLAM2D:FILEPATH=/usr/local/lib/libg2o_types_sclam2d.so
+
+//Path to a library.
+G2O_TYPES_SCLAM2D_DEBUG:FILEPATH=G2O_TYPES_SCLAM2D_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_SIM3:FILEPATH=/usr/local/lib/libg2o_types_sim3.so
+
+//Path to a library.
+G2O_TYPES_SIM3_DEBUG:FILEPATH=G2O_TYPES_SIM3_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_SLAM2D:FILEPATH=/usr/local/lib/libg2o_types_slam2d.so
+
+//Path to a library.
+G2O_TYPES_SLAM2D_DEBUG:FILEPATH=G2O_TYPES_SLAM2D_DEBUG-NOTFOUND
+
+//Path to a library.
+G2O_TYPES_SLAM3D:FILEPATH=/usr/local/lib/libg2o_types_slam3d.so
+
+//Path to a library.
+G2O_TYPES_SLAM3D_DEBUG:FILEPATH=G2O_TYPES_SLAM3D_DEBUG-NOTFOUND
+
 //The directory containing a CMake configuration file for GMock.
 GMock_DIR:PATH=GMock_DIR-NOTFOUND
 
@@ -334,6 +451,9 @@ LSB_RELEASE_EXECUTABLE:FILEPATH=/usr/bin/lsb_release
 //Path to a program.
 NOSETESTS:FILEPATH=/usr/bin/nosetests3
 
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/local/share/OpenCV
+
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
 
@@ -342,6 +462,9 @@ PYTHON_VERSION:STRING=3
 
 //Location of Python module em
 PY_EM:STRING=/usr/lib/python3/dist-packages/em.py
+
+//The directory containing a CMake configuration file for Pangolin.
+Pangolin_DIR:PATH=/usr/local/lib/cmake/Pangolin
 
 //Value Computed by CMake
 Project_BINARY_DIR:STATIC=/home/g/CLionProjects/Ros_test/src/cmake-build-debug
@@ -370,11 +493,23 @@ SETUPTOOLS_DEB_LAYOUT:BOOL=ON
 //Name of the computer/site where compile is being run
 SITE:STRING=ubuntu
 
+//The directory containing a CMake configuration file for Sophus.
+Sophus_DIR:PATH=/usr/local/share/sophus/cmake
+
 //LSB Distrib tag
 UBUNTU:BOOL=TRUE
 
 //LSB Distrib - codename tag
 UBUNTU_FOCAL:BOOL=TRUE
+
+//Value Computed by CMake
+V_test_BINARY_DIR:STATIC=/home/g/CLionProjects/Ros_test/src/cmake-build-debug/V_test
+
+//Value Computed by CMake
+V_test_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+V_test_SOURCE_DIR:STATIC=/home/g/CLionProjects/Ros_test/src/V_test
 
 //Path to a file.
 _gmock_INCLUDES:FILEPATH=/usr/src/googletest/googlemock/include/gmock/gmock.h
@@ -390,6 +525,18 @@ _gtest_SOURCES:FILEPATH=/usr/src/gtest/src/gtest.cc
 
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/noetic/share/catkin/cmake
+
+//The directory containing a CMake configuration file for cpp_common.
+cpp_common_DIR:PATH=/opt/ros/noetic/share/cpp_common/cmake
+
+//The directory containing a CMake configuration file for fmt.
+fmt_DIR:PATH=/usr/local/lib/cmake/fmt
+
+//The directory containing a CMake configuration file for gflags.
+gflags_DIR:PATH=/usr/local/lib/cmake/gflags
+
+//The directory containing a CMake configuration file for glog.
+glog_DIR:PATH=/usr/local/lib/cmake/glog
 
 //Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/home/g/CLionProjects/Ros_test/src/cmake-build-debug/gtest/googlemock
@@ -445,6 +592,48 @@ gtest_hide_internal_symbols:BOOL=OFF
 
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;gtest;
+
+//Path to a library.
+lib:FILEPATH=/opt/ros/noetic/lib/libxmlrpcpp.so
+
+//The directory containing a CMake configuration file for message_runtime.
+message_runtime_DIR:PATH=/opt/ros/noetic/share/message_runtime/cmake
+
+//The directory containing a CMake configuration file for rosconsole.
+rosconsole_DIR:PATH=/opt/ros/noetic/share/rosconsole/cmake
+
+//The directory containing a CMake configuration file for roscpp.
+roscpp_DIR:PATH=/opt/ros/noetic/share/roscpp/cmake
+
+//The directory containing a CMake configuration file for roscpp_serialization.
+roscpp_serialization_DIR:PATH=/opt/ros/noetic/share/roscpp_serialization/cmake
+
+//The directory containing a CMake configuration file for roscpp_traits.
+roscpp_traits_DIR:PATH=/opt/ros/noetic/share/roscpp_traits/cmake
+
+//The directory containing a CMake configuration file for rosgraph_msgs.
+rosgraph_msgs_DIR:PATH=/opt/ros/noetic/share/rosgraph_msgs/cmake
+
+//The directory containing a CMake configuration file for rospy.
+rospy_DIR:PATH=/opt/ros/noetic/share/rospy/cmake
+
+//The directory containing a CMake configuration file for rostime.
+rostime_DIR:PATH=/opt/ros/noetic/share/rostime/cmake
+
+//Value Computed by CMake
+src_BINARY_DIR:STATIC=/home/g/CLionProjects/Ros_test/src/cmake-build-debug/V_test/src
+
+//Value Computed by CMake
+src_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+src_SOURCE_DIR:STATIC=/home/g/CLionProjects/Ros_test/src/V_test/src
+
+//The directory containing a CMake configuration file for std_msgs.
+std_msgs_DIR:PATH=/opt/ros/noetic/share/std_msgs/cmake
+
+//The directory containing a CMake configuration file for xmlrpcpp.
+xmlrpcpp_DIR:PATH=/opt/ros/noetic/share/xmlrpcpp/cmake
 
 
 ########################
@@ -633,6 +822,8 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding OpenCV
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr/local][v3.4.16(3)]
 //Details about finding PY_em
 FIND_PACKAGE_MESSAGE_DETAILS_PY_em:INTERNAL=[/usr/lib/python3/dist-packages/em.py][v()]
 //Details about finding PythonInterp

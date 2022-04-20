@@ -37,3 +37,18 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/g/CLionProjects/Ros_test/build/V_test/catkin_generated/installspace/V_test.pc")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/V_test/cmake" TYPE FILE FILES
+    "/home/g/CLionProjects/Ros_test/build/V_test/catkin_generated/installspace/V_testConfig.cmake"
+    "/home/g/CLionProjects/Ros_test/build/V_test/catkin_generated/installspace/V_testConfig-version.cmake"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/V_test" TYPE FILE FILES "/home/g/CLionProjects/Ros_test/src/V_test/package.xml")
+endif()
+
