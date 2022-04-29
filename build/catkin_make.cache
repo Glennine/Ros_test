@@ -1,2 +1,2 @@
-V_test
+v_test
 -DCATKIN_DEVEL_PREFIX=/home/g/CLionProjects/Ros_test/devel -DCMAKE_INSTALL_PREFIX=/home/g/CLionProjects/Ros_test/install -G Unix Makefiles

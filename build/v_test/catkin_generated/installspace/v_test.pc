@@ -1,0 +1,8 @@
+prefix=/home/g/CLionProjects/Ros_test/install
+
+Name: v_test
+Description: Description of v_test
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
