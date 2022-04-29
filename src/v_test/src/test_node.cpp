@@ -11,7 +11,7 @@
 #include <string>
 #include <boost/format.hpp>
 using namespace std;
-string DATA_PATH = "/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/";
+//string DATA_PATH = "/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/";
 boost::format fmt_file("/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/%010d.png");  
 int main(int argc,char **argv){
     int frame = 0; // frame number
