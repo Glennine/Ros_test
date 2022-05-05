@@ -18,11 +18,15 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/usr/include/eigen3"
+  "/usr/local/include/opencv"
+  "/home/g/CLionProjects/Ros_test/src/v_test/fmt"
+  "/usr/local/include/sophus"
   "/home/g/CLionProjects/Ros_test/src/v_test/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
-  "/usr/local/include/opencv"
   "/usr/include/opencv4"
+  "/home/g/CLionProjects/Ros_test/src/v_test/fmt::fmt"
   )
 
 # Targets to which this target links.

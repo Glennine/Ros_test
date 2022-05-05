@@ -2,11 +2,15 @@ cmake_minimum_required(VERSION 3.0.2)
 project(v_test)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+# add_compile_options(-std=c++14)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+LIST( APPEND CMAKE_MODULE_PATH /home/g/C++_library/g2o/cmake_modules )
+SET( G2O_ROOT /usr/local/include/g2o )
+find_package(G2O REQUIRED)
+include_directories("/usr/include/eigen3")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
@@ -16,7 +20,12 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   cv_bridge
 )
-
+#find_package(Sophus REQUIRED)
+include_directories("/usr/local/include/sophus")
+find_package(Glog REQUIRED)
+find_package(FMT REQUIRED)
+set(FMT_LIBRARIES fmt::fmt)
+include_directories(${OpenCV_INCLUDE_DIRS} fmt)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -123,13 +132,17 @@ include_directories(
  include
   ${catkin_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
+         "/usr/include/eigen3/" ${G2O_INCLUDE_DIRS} "/usr/local/include/sophus"
+        "${PROJECT_SOURCE_DIR}/include"
 )
 
 # Declare a C++ library
- add_library(${PROJECT_NAME}
-   src/test_node.cpp
- )
-
+ #add_library(${PROJECT_NAME}
+  # src/test_node.cpp)
+ add_library(estimate_pose SHARED
+   src/estimate_pose.cpp)
+target_link_libraries(estimate_pose ${catkin_LIBRARIES} ${OpenCV_LIBS} g2o_core g2o_stuff "/usr/local/include/sophus" fmt glog::glog)
+set_target_properties(estimate_pose PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/estimate_pose.h)
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -152,7 +165,7 @@ include_directories(
 
 # Specify libraries to link a library or executable target against
  target_link_libraries(${PROJECT_NAME}_node
-   ${catkin_LIBRARIES} ${OpenCV_LIBS}
+   ${catkin_LIBRARIES} ${OpenCV_LIBS} estimate_pose
  )
 
 #############
@@ -184,11 +197,11 @@ include_directories(
 # )
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
+ install(DIRECTORY include/${PROJECT_NAME}/
+   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
-# )
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

@@ -80,16 +80,6 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -112,6 +102,16 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target test
 test:
@@ -468,6 +468,21 @@ geometry_msgs_generate_messages_py/fast:
 .PHONY : geometry_msgs_generate_messages_py/fast
 
 # Convenience name for target.
+v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+.PHONY : v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_cpp: v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : sensor_msgs_generate_messages_cpp
+
+# fast build rule for target.
+sensor_msgs_generate_messages_cpp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
+.PHONY : sensor_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
 v_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
 .PHONY : v_test/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
@@ -498,34 +513,19 @@ geometry_msgs_generate_messages_eus/fast:
 .PHONY : geometry_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
-.PHONY : v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+v_test/CMakeFiles/estimate_pose.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/estimate_pose.dir/rule
+.PHONY : v_test/CMakeFiles/estimate_pose.dir/rule
 
 # Convenience name for target.
-sensor_msgs_generate_messages_cpp: v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+estimate_pose: v_test/CMakeFiles/estimate_pose.dir/rule
 
-.PHONY : sensor_msgs_generate_messages_cpp
+.PHONY : estimate_pose
 
 # fast build rule for target.
-sensor_msgs_generate_messages_cpp/fast:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
-.PHONY : sensor_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-v_test/CMakeFiles/v_test.dir/rule:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/v_test.dir/rule
-.PHONY : v_test/CMakeFiles/v_test.dir/rule
-
-# Convenience name for target.
-v_test: v_test/CMakeFiles/v_test.dir/rule
-
-.PHONY : v_test
-
-# fast build rule for target.
-v_test/fast:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test.dir/build.make v_test/CMakeFiles/v_test.dir/build
-.PHONY : v_test/fast
+estimate_pose/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/estimate_pose.dir/build.make v_test/CMakeFiles/estimate_pose.dir/build
+.PHONY : estimate_pose/fast
 
 # Convenience name for target.
 v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
@@ -572,13 +572,39 @@ rosgraph_msgs_generate_messages_cpp/fast:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
+src/estimate_pose.o: src/estimate_pose.cpp.o
+
+.PHONY : src/estimate_pose.o
+
+# target to build an object file
+src/estimate_pose.cpp.o:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/estimate_pose.dir/build.make v_test/CMakeFiles/estimate_pose.dir/src/estimate_pose.cpp.o
+.PHONY : src/estimate_pose.cpp.o
+
+src/estimate_pose.i: src/estimate_pose.cpp.i
+
+.PHONY : src/estimate_pose.i
+
+# target to preprocess a source file
+src/estimate_pose.cpp.i:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/estimate_pose.dir/build.make v_test/CMakeFiles/estimate_pose.dir/src/estimate_pose.cpp.i
+.PHONY : src/estimate_pose.cpp.i
+
+src/estimate_pose.s: src/estimate_pose.cpp.s
+
+.PHONY : src/estimate_pose.s
+
+# target to generate assembly for a file
+src/estimate_pose.cpp.s:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/estimate_pose.dir/build.make v_test/CMakeFiles/estimate_pose.dir/src/estimate_pose.cpp.s
+.PHONY : src/estimate_pose.cpp.s
+
 src/test_node.o: src/test_node.cpp.o
 
 .PHONY : src/test_node.o
 
 # target to build an object file
 src/test_node.cpp.o:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test.dir/build.make v_test/CMakeFiles/v_test.dir/src/test_node.cpp.o
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test_node.dir/build.make v_test/CMakeFiles/v_test_node.dir/src/test_node.cpp.o
 .PHONY : src/test_node.cpp.o
 
@@ -588,7 +614,6 @@ src/test_node.i: src/test_node.cpp.i
 
 # target to preprocess a source file
 src/test_node.cpp.i:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test.dir/build.make v_test/CMakeFiles/v_test.dir/src/test_node.cpp.i
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test_node.dir/build.make v_test/CMakeFiles/v_test_node.dir/src/test_node.cpp.i
 .PHONY : src/test_node.cpp.i
 
@@ -598,7 +623,6 @@ src/test_node.s: src/test_node.cpp.s
 
 # target to generate assembly for a file
 src/test_node.cpp.s:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test.dir/build.make v_test/CMakeFiles/v_test.dir/src/test_node.cpp.s
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test_node.dir/build.make v_test/CMakeFiles/v_test_node.dir/src/test_node.cpp.s
 .PHONY : src/test_node.cpp.s
 
@@ -610,7 +634,6 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install"
-	@echo "... list_install_components"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... geometry_msgs_generate_messages_cpp"
@@ -633,15 +656,19 @@ help:
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_eus"
-	@echo "... sensor_msgs_generate_messages_cpp"
-	@echo "... v_test"
+	@echo "... list_install_components"
+	@echo "... estimate_pose"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... v_test_node"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... test"
 	@echo "... edit_cache"
+	@echo "... src/estimate_pose.o"
+	@echo "... src/estimate_pose.i"
+	@echo "... src/estimate_pose.s"
 	@echo "... src/test_node.o"
 	@echo "... src/test_node.i"
 	@echo "... src/test_node.s"

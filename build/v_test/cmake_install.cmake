@@ -52,3 +52,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/v_test" TYPE FILE FILES "/home/g/CLionProjects/Ros_test/src/v_test/package.xml")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/v_test" TYPE DIRECTORY FILES "/home/g/CLionProjects/Ros_test/src/v_test/include/v_test/" FILES_MATCHING REGEX "/[^/]*\\.h$")
+endif()
+
