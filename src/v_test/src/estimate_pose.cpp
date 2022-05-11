@@ -193,12 +193,15 @@ void estimate_pose::find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2
                             std::vector<uchar> status){
     //init
     vector<KeyPoint> keypoint_1;
-    Ptr<GFTTDetector> detector = GFTTDetector::create(500, 0.01, 1, 3, false, 0.04);
-    //detect the keypoints
+    // Ptr<GFTTDetector> detector_gftt = GFTTDetector::create(500, 0.01, 1, 3, false, 0.04);
+    // detector_gftt->detect(img_1, keypoint_1);
+    Ptr<FeatureDetector> detector = ORB::create();
     detector->detect(img_1, keypoint_1);
     //compute the optical flow
-    for(auto kp:keypoint_1) pt1.push_back(kp.pt);
+    for(int i = 0; i < keypoint_1.size(); i++){
+        pt1.push_back(keypoint_1[i].pt);}
     vector<float> error;
+    //cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status, error);
     std::vector<uchar> status_tmp;
     cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status_tmp, error);
     reduceVector(pt1,status_tmp);
@@ -397,14 +400,15 @@ cv::Mat estimate_pose::visualizeOpticalFlow(const Mat &img_2,
                            std::vector<cv::Point2f>& pt1,
                            std::vector<cv::Point2f>& pt2,
                            vector<uchar> status){
-    Mat img_flow;
-    cv::cvtColor(img_2, img_flow, cv::COLOR_GRAY2BGR);
+    Mat img_flow = img_2.clone();
+    //cv::cvtColor(img_flow, img_flow, cv::COLOR_GRAY2BGR);
     //we convert the color to gray, because we only need the flow
-    for (int i = 0; i < pt2.size(); i++) {
-        if (status[i]) {
-            cv::circle(img_flow, pt2[i], 2, cv::Scalar(0, 250, 0), 2);
+    for (int i = 0; i < pt2.size(); ++i) {
+    //     if (status[i]==1) {
+    //         cout<<pt1[i]<<" "<<pt2[i]<<endl;
+            cv::circle(img_flow, pt2[i], 3, cv::Scalar(0, 250, 0), -1);
             cv::line(img_flow, pt1[i], pt2[i], cv::Scalar(0, 250, 0));
-        }
+    //     }
     }
     return img_flow;
 }
