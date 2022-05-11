@@ -13,6 +13,7 @@ int main(int argc,char **argv){
     image_transport::ImageTransport it(nh); //创建图像传输句柄
     image_transport::Publisher pub = it.advertise("camera/image", 1); //创建发布者
     image_transport::Publisher pub_matches = it.advertise("camera/image_match", 10); //创建订阅者
+    //image_transport::Publisher pub_opticalflow = it.advertise("camera/image_opticalflow", 10); //创建订阅者
     cv::Mat image_pre,image_cur;
     ros::Rate loop_rate(10); //10HZ
     while (nh.ok()) { // 循环发布图像
@@ -28,11 +29,12 @@ int main(int argc,char **argv){
         estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
         cv::Mat match_image = 
         estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
-        // cv::Mat optical_flow_match_image = estimate_pose.visualizeOpticalFlow(images[frame_i], keypoints_2f[frame_i-1], keypoints_2f[frame_i], matches);
-        // cv_bridge::CvImage optical_flow_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", optical_flow_match_image);
-        // pub_matches.publish(optical_flow_viz_cvbridge.toImageMsg());
         cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
         pub_matches.publish(matches_viz_cvbridge.toImageMsg());
+        //estimate_pose.find_feature_flow(image_pre,image_cur,keypoints_pre,keypoints_cur,status);
+        // cv::Mat optical_flow_match_image = estimate_pose.visualizeOpticalFlow(image_cur, keypoints2f_pre,keypoints2f_cur,status);
+        // cv_bridge::CvImage optical_flow_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", optical_flow_match_image);
+        // pub_opticalflow.publish(optical_flow_viz_cvbridge.toImageMsg());
         ros::spinOnce();
         loop_rate.sleep();
         frame_i++;

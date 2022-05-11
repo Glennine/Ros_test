@@ -120,10 +120,11 @@ typedef vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vecto
 
 //use feature matching(ORB/flow/direct) to find the essential matrix
 void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& img_2,
-                          std::vector<cv::KeyPoint>& keypoints_1,
-                          std::vector<cv::KeyPoint>& keypoints_2,
+                          std::vector<cv::KeyPoint>& RR_keypoints_1,
+                          std::vector<cv::KeyPoint>& RR_keypoints_2,
                           std::vector<cv::DMatch>& matches){
     //-- init
+    vector<KeyPoint> keypoints_1,keypoints_2;
     Mat descriptors_1, descriptors_2;
     //use orb to find the keypoints and descriptors
     Ptr<FeatureDetector> detector = ORB::create();
@@ -139,18 +140,80 @@ void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& im
     vector<DMatch> match;
     matcher->match(descriptors_1, descriptors_2, match);
     //find the good matches (define the max and min distance)
-    double min_dist=10000, max_dist=0;
-    for(int i = 0; i < descriptors_1.rows; i++){
-        double dist = match[i].distance;
-        if(dist < min_dist) min_dist = dist;
-        if(dist > max_dist) max_dist = dist;
+    // double min_dist=10000, max_dist=0;
+    // for(int i = 0; i < descriptors_1.rows; i++){
+    //     double dist = match[i].distance;
+    //     if(dist < min_dist) min_dist = dist;
+    //     if(dist > max_dist) max_dist = dist;
+    // }
+    // cout<<"-- Max dist : "<< max_dist<<endl;
+    // cout<<"-- Min dist : "<< min_dist<<endl;
+    // //matches that are not too far away
+    // for(int i = 0; i < descriptors_1.rows; i++){
+    //     if(match[i].distance <= max(2*min_dist, 30.0)){
+    //         matches.push_back(match[i]);
+    //     }
+    // }
+    //use ransac to erase the outliers
+    //convert keypoints to point2f type
+    vector<KeyPoint> R_keypoints_1,R_keypoints_2;
+    for (size_t i=0;i<match.size();i++)   
+    {
+        R_keypoints_1.push_back(keypoints_1[match[i].queryIdx]);
+        R_keypoints_2.push_back(keypoints_2[match[i].trainIdx]);
     }
-    //matches that are not too far away
-    for(int i = 0; i < descriptors_1.rows; i++){
-        if(match[i].distance <= max(2*min_dist, 30.0)){
+    vector<Point2f> points_1, points_2;
+    for (size_t i=0;i<match.size();i++)
+    {
+        points_1.push_back(R_keypoints_1[i].pt);
+        points_2.push_back(R_keypoints_2[i].pt);
+    }
+    vector<uchar> RansacStatus;
+    Mat Fundamental= cv::findFundamentalMat(points_1,points_2,RansacStatus,FM_RANSAC);
+    //erase the outliers
+    int index=0;
+    for (size_t i=0;i<match.size();i++)
+    {
+        if (RansacStatus[i]!=0)
+        {
+            RR_keypoints_1.push_back(KeyPoint(points_1[i], 1.f));
+            RR_keypoints_2.push_back(KeyPoint(points_2[i], 1.f));
+            match[i].queryIdx=index;
+            match[i].trainIdx=index;
             matches.push_back(match[i]);
+            index++;
         }
     }
+
+}
+
+void estimate_pose::find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2,
+                            std::vector<cv::Point2f>& pt1,
+                            std::vector<cv::Point2f>& pt2,
+                            std::vector<uchar> status){
+    //init
+    vector<KeyPoint> keypoint_1;
+    Ptr<GFTTDetector> detector = GFTTDetector::create(500, 0.01, 1, 3, false, 0.04);
+    //detect the keypoints
+    detector->detect(img_1, keypoint_1);
+    //compute the optical flow
+    for(auto kp:keypoint_1) pt1.push_back(kp.pt);
+    vector<float> error;
+    std::vector<uchar> status_tmp;
+    cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status_tmp, error);
+    reduceVector(pt1,status_tmp);
+    reduceVector(pt2,status_tmp);
+    cv::findFundamentalMat(pt1,pt2, cv::FM_RANSAC, 1, 0.99, status);
+    reduceVector(pt1, status);
+    reduceVector(pt2, status);
+}
+
+void estimate_pose::reduceVector(vector<cv::Point2f> &v, vector<uchar> status) {
+  int j = 0;
+  for (int i = 0; i < int(v.size()); i++)
+    if (status[i])
+      v[j++] = v[i];
+  v.resize(j);
 }
 
 Point2d estimate_pose::pixel2camera ( const Point2d& p, const Mat& K )
@@ -324,8 +387,24 @@ cv::Mat estimate_pose::visualizeMatches(const Mat &img_1, const Mat &img_2,
                           std::vector<cv::KeyPoint> keypoints_1,
                           std::vector<cv::KeyPoint> keypoints_2,
                           std::vector<cv::DMatch> matches){
-    Mat outimg1,img_match;
+    Mat img_match;
     //drawKeypoints(img_1,keypoints_1,outimg1,Scalar::all(-1),DrawMatchesFlags::DEFAULT);
     drawMatches(img_1,keypoints_1,img_2,keypoints_2,matches,img_match);
     return img_match;
+}
+
+cv::Mat estimate_pose::visualizeOpticalFlow(const Mat &img_2,
+                           std::vector<cv::Point2f>& pt1,
+                           std::vector<cv::Point2f>& pt2,
+                           vector<uchar> status){
+    Mat img_flow;
+    cv::cvtColor(img_2, img_flow, cv::COLOR_GRAY2BGR);
+    //we convert the color to gray, because we only need the flow
+    for (int i = 0; i < pt2.size(); i++) {
+        if (status[i]) {
+            cv::circle(img_flow, pt2[i], 2, cv::Scalar(0, 250, 0), 2);
+            cv::line(img_flow, pt1[i], pt2[i], cv::Scalar(0, 250, 0));
+        }
+    }
+    return img_flow;
 }

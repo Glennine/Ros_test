@@ -24,9 +24,13 @@ class estimate_pose{
 public:
         estimate_pose(){}
 void find_feature_matches(const cv::Mat& img_1, const cv::Mat& img_2,
-                          std::vector<cv::KeyPoint>& keypoints_1,
-                          std::vector<cv::KeyPoint>& keypoints_2,
+                          std::vector<cv::KeyPoint>& RR_keypoints_1,
+                          std::vector<cv::KeyPoint>& RR_keypoints_2,
                           std::vector<cv::DMatch>& matches);
+void find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2,
+                            std::vector<cv::Point2f>& pt1,
+                            std::vector<cv::Point2f>& pt2,
+                            std::vector<uchar> status);
 void pose_estimation_2d2d(const cv::Mat &K,
                           std::vector<cv::KeyPoint> keypoints_1,
                           std::vector<cv::KeyPoint> keypoints_2,
@@ -40,7 +44,7 @@ void triangulation(//must have translation vector
         vector<Point3d> &points);
 
 Point2d pixel2camera ( const Point2d& p, const Mat& K );
-
+void reduceVector(vector<cv::Point2f> &v, vector<uchar> status);
 //3d-2d pose estimate
 //create BA (slef define the edge type) 不光考虑了单应矩阵的计算误差，也考虑了图像点的测量误差，所以其精度会更高
 typedef vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> Vector2dVector;
@@ -52,5 +56,9 @@ cv::Mat visualizeMatches(const Mat &img_1, const Mat &img_2,
                           std::vector<cv::KeyPoint> keypoints_1,
                           std::vector<cv::KeyPoint> keypoints_2,
                           std::vector<cv::DMatch> matches);
+cv::Mat visualizeOpticalFlow(const Mat &img_2,
+                           std::vector<cv::Point2f>& pt1,
+                           std::vector<cv::Point2f>& pt2,
+                           vector<uchar> status);
 };
 #endif //TEST_ESTIMATE_POSE_H
