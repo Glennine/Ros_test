@@ -597,6 +597,19 @@ estimate_pose/fast:
 .PHONY : estimate_pose/fast
 
 #=============================================================================
+# Target rules for targets named odometry_calculation
+
+# Build rule for target.
+odometry_calculation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 odometry_calculation
+.PHONY : odometry_calculation
+
+# fast build rule for target.
+odometry_calculation/fast:
+	$(MAKE) -f v_test/CMakeFiles/odometry_calculation.dir/build.make v_test/CMakeFiles/odometry_calculation.dir/build
+.PHONY : odometry_calculation/fast
+
+#=============================================================================
 # Target rules for targets named std_msgs_generate_messages_py
 
 # Build rule for target.
@@ -681,6 +694,7 @@ help:
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... estimate_pose"
+	@echo "... odometry_calculation"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... v_test_node"
 	@echo "... rosgraph_msgs_generate_messages_cpp"

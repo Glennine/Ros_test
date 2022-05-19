@@ -156,6 +156,7 @@ v_test_node_EXTERNAL_OBJECTS =
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /home/g/CLionProjects/Ros_test/devel/lib/libestimate_pose.so
+/home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /home/g/CLionProjects/Ros_test/devel/lib/libodometry_calculation.so
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/local/lib/libopencv_dnn.so.3.4.16
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/local/lib/libopencv_highgui.so.3.4.16
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/local/lib/libopencv_ml.so.3.4.16

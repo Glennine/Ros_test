@@ -36,6 +36,10 @@ g2o/solvers/dense/linear_solver_dense.h
 se3.hpp
 -
 
+/home/g/CLionProjects/Ros_test/src/v_test/include/v_test/odometry_calculation.h
+estimate_pose.h
+/home/g/CLionProjects/Ros_test/src/v_test/include/v_test/estimate_pose.h
+
 /home/g/CLionProjects/Ros_test/src/v_test/include/v_test/test_node.h
 ros/ros.h
 -
@@ -49,12 +53,16 @@ cv_bridge/cv_bridge.h
 -
 iostream
 -
+fstream
+-
 string
 -
 boost/format.hpp
 -
 v_test/estimate_pose.h
 /home/g/CLionProjects/Ros_test/src/v_test/include/v_test/v_test/estimate_pose.h
+v_test/odometry_calculation.h
+/home/g/CLionProjects/Ros_test/src/v_test/include/v_test/v_test/odometry_calculation.h
 
 /home/g/CLionProjects/Ros_test/src/v_test/src/test_node.cpp
 v_test/test_node.h

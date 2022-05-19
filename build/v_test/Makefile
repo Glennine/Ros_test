@@ -80,6 +80,17 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/cmake-gui -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -123,17 +134,6 @@ test:
 test/fast: test
 
 .PHONY : test/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/cmake-gui -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -528,6 +528,21 @@ estimate_pose/fast:
 .PHONY : estimate_pose/fast
 
 # Convenience name for target.
+v_test/CMakeFiles/odometry_calculation.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/odometry_calculation.dir/rule
+.PHONY : v_test/CMakeFiles/odometry_calculation.dir/rule
+
+# Convenience name for target.
+odometry_calculation: v_test/CMakeFiles/odometry_calculation.dir/rule
+
+.PHONY : odometry_calculation
+
+# fast build rule for target.
+odometry_calculation/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/odometry_calculation.dir/build.make v_test/CMakeFiles/odometry_calculation.dir/build
+.PHONY : odometry_calculation/fast
+
+# Convenience name for target.
 v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 .PHONY : v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
@@ -599,6 +614,33 @@ src/estimate_pose.cpp.s:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/estimate_pose.dir/build.make v_test/CMakeFiles/estimate_pose.dir/src/estimate_pose.cpp.s
 .PHONY : src/estimate_pose.cpp.s
 
+src/odometry_calculation.o: src/odometry_calculation.cpp.o
+
+.PHONY : src/odometry_calculation.o
+
+# target to build an object file
+src/odometry_calculation.cpp.o:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/odometry_calculation.dir/build.make v_test/CMakeFiles/odometry_calculation.dir/src/odometry_calculation.cpp.o
+.PHONY : src/odometry_calculation.cpp.o
+
+src/odometry_calculation.i: src/odometry_calculation.cpp.i
+
+.PHONY : src/odometry_calculation.i
+
+# target to preprocess a source file
+src/odometry_calculation.cpp.i:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/odometry_calculation.dir/build.make v_test/CMakeFiles/odometry_calculation.dir/src/odometry_calculation.cpp.i
+.PHONY : src/odometry_calculation.cpp.i
+
+src/odometry_calculation.s: src/odometry_calculation.cpp.s
+
+.PHONY : src/odometry_calculation.s
+
+# target to generate assembly for a file
+src/odometry_calculation.cpp.s:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/odometry_calculation.dir/build.make v_test/CMakeFiles/odometry_calculation.dir/src/odometry_calculation.cpp.s
+.PHONY : src/odometry_calculation.cpp.s
+
 src/test_node.o: src/test_node.cpp.o
 
 .PHONY : src/test_node.o
@@ -634,6 +676,7 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install"
+	@echo "... edit_cache"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... geometry_msgs_generate_messages_cpp"
@@ -661,14 +704,17 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... list_install_components"
 	@echo "... estimate_pose"
+	@echo "... odometry_calculation"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... v_test_node"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... test"
-	@echo "... edit_cache"
 	@echo "... src/estimate_pose.o"
 	@echo "... src/estimate_pose.i"
 	@echo "... src/estimate_pose.s"
+	@echo "... src/odometry_calculation.o"
+	@echo "... src/odometry_calculation.i"
+	@echo "... src/odometry_calculation.s"
 	@echo "... src/test_node.o"
 	@echo "... src/test_node.i"
 	@echo "... src/test_node.s"

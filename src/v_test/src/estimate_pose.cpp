@@ -6,28 +6,10 @@
 #include "v_test/estimate_pose.h"
 using namespace std;
 using namespace cv;
-Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
-// string file_1 = "/home/g/CLionProjects/slambook2/ch7/1.png";  // first image
-// string file_2 = "/home/g/CLionProjects/slambook2/ch7/2.png";  // second image
-// string file_3;
 int Flag = 0;
 typedef vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> Vector2dVector;
 typedef vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVector;
-// int main(){
-//     Mat img1 = imread(file_1,0);
-//     Mat img2 = imread(file_2,0);
-//     if(img1.empty() || img2.empty()){
-//         cout << "can not open image" << endl;
-//         return -1;
-//     }
-//     vector<KeyPoint> keypoints_1, keypoints_2;
-//     vector<DMatch> matches;
-//     chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
-//     estimate_pose.find_feature_matches(img1, img2, keypoints_1, keypoints_2, matches);
-//     cout << "find " << matches.size() << " matches" << endl;
-//     chrono::steady_clock::time_point t2 = chrono::steady_clock::now();
-//     chrono::duration<double> time_used = chrono::duration_cast<chrono::duration<double>>(t2 - t1);
-//     cout << "time used: " << time_used.count() << " seconds." << endl;
+Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
 //     if (file_3.empty()&&Flag==0){
 //         cout << "pose estimate by 2d-2d" << endl;
 //         //triangulate to achieve 3d-2d
@@ -139,21 +121,6 @@ void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& im
     //match the descriptors
     vector<DMatch> match;
     matcher->match(descriptors_1, descriptors_2, match);
-    //find the good matches (define the max and min distance)
-    // double min_dist=10000, max_dist=0;
-    // for(int i = 0; i < descriptors_1.rows; i++){
-    //     double dist = match[i].distance;
-    //     if(dist < min_dist) min_dist = dist;
-    //     if(dist > max_dist) max_dist = dist;
-    // }
-    // cout<<"-- Max dist : "<< max_dist<<endl;
-    // cout<<"-- Min dist : "<< min_dist<<endl;
-    // //matches that are not too far away
-    // for(int i = 0; i < descriptors_1.rows; i++){
-    //     if(match[i].distance <= max(2*min_dist, 30.0)){
-    //         matches.push_back(match[i]);
-    //     }
-    // }
     //use ransac to erase the outliers
     //convert keypoints to point2f type
     vector<KeyPoint> R_keypoints_1,R_keypoints_2;
@@ -240,15 +207,15 @@ void estimate_pose::pose_estimation_2d2d(const cv::Mat &K,
     }
     //calculate the fundamental matrix
     Mat fundamental_matrix;
-    fundamental_matrix = findFundamentalMat(points1, points2, 2);
-    cout<<"fundamental matrix= "<<endl<<fundamental_matrix<<endl;
+    fundamental_matrix = findFundamentalMat(points1, points2, FM_RANSAC);
+    //cout<<"fundamental matrix= "<<endl<<fundamental_matrix<<endl;
     //calculate the essential matrix
     Mat essential_matrix = findEssentialMat(points1, points2, K, RANSAC, 0.999, 1.0, noArray());
     //LMeds本质上还是使用了全部点，如果离群点太多，是会影响到结果的，相对来说，点集足够的情况下，RANSAC更好
     // Point2d principal_point(325.1, 249.7);  //相机光心, TUM dataset标定值
     // double focal_length = 521;      //相机焦距, TUM dataset标定值
     // Mat essential_matrix = findEssentialMat(points1, points2, focal_length, principal_point);
-    cout<<"essential matrix= "<<endl<<essential_matrix<<endl;
+    //cout<<"essential matrix= "<<endl<<essential_matrix<<endl;
     //calculate homography matrix
     Mat homography_matrix = findHomography(points1, points2, RANSAC, 3);
     //find the rotation and translation
