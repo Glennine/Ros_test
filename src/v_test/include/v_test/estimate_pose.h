@@ -43,6 +43,13 @@ void triangulation(//must have translation vector
         const Mat &R, const Mat &t,
         vector<Point3d> &points);
 
+void flow_triangulation(//must have translation vector
+        const vector<Point2f> &pt1,
+        const vector<Point2f> &pt2,
+        const vector<uchar> &status,
+        const Mat &R, const Mat &t,
+        vector<Point3d> &points);
+
 Point2d pixel2camera ( const Point2d& p, const Mat& K );
 void reduceVector(vector<cv::Point2f> &v, vector<uchar> status);
 //3d-2d pose estimate

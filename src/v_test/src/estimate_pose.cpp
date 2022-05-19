@@ -10,22 +10,6 @@ int Flag = 0;
 typedef vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> Vector2dVector;
 typedef vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVector;
 Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
-//     if (file_3.empty()&&Flag==0){
-//         cout << "pose estimate by 2d-2d" << endl;
-//         //triangulate to achieve 3d-2d
-//          //estimate the pose
-//         Mat R, t;
-//         t1 = chrono::steady_clock::now();
-//         estimate_pose.pose_estimation_2d2d(K,keypoints_1, keypoints_2, matches, R, t);
-//         t2 = chrono::steady_clock::now();
-//         cout<<"time used: "<<chrono::duration_cast<chrono::duration<double>>(t2-t1).count()<<" seconds."<<endl;
-
-//         //evaluate the estimation and real data
-//         Mat t_x =
-//         (Mat_<double>(3, 3) << 0, -t.at<double>(2, 0), t.at<double>(1, 0),
-//         t.at<double>(2, 0), 0, -t.at<double>(0, 0),
-//         -t.at<double>(1, 0), t.at<double>(0, 0), 0);
-//         cout<<"t^R= "<<endl<<t_x*R<<endl;
 
 //         // verify the estimation
 //         for(DMatch m:matches){
@@ -94,11 +78,7 @@ Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相
 //         cout << "solve pnp by g2o cost time: " << chrono::duration_cast<chrono::duration<double>>(t2 - t1).count()<< " seconds." << endl;
 
 //     }
-    
 
-//     return 0;
-       
-// }
 
 //use feature matching(ORB/flow/direct) to find the essential matrix
 void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& img_2,
@@ -253,6 +233,38 @@ void estimate_pose::triangulation(
     //The point at the centre of the image cannot be triangulated (no visual error) 
     //although there is displacement when the camera advances
   }
+
+void estimate_pose::flow_triangulation(
+    const vector<Point2f> &pt1,
+    const vector<Point2f> &pt2,
+    const std::vector<uchar> &status,
+    const Mat &R, const Mat &t,
+    vector<Point3d> &points){
+        Mat T1 = (Mat_<double>(3,4) <<
+    1,0,0,0,
+    0,1,0,0,
+    0,0,1,0);
+    Mat T2 = (Mat_<double>(3,4) <<
+    R.at<double>(0,0),R.at<double>(0,1),R.at<double>(0,2),t.at<double>(0,0),
+    R.at<double>(1,0),R.at<double>(1,1),R.at<double>(1,2),t.at<double>(1,0),
+    R.at<double>(2,0),R.at<double>(2,1),R.at<double>(2,2),t.at<double>(2,0));
+    vector<Point2f> pts_1, pts_2;
+    for (int i = 0; i < pt1.size(); i++){
+            pts_1.push_back(pixel2camera(pt1[i], K));
+            pts_2.push_back(pixel2camera(pt2[i], K));
+    }
+
+    Mat pts_4d;
+    cv::triangulatePoints(T1, T2, pts_1, pts_2, pts_4d);//pts_4d=(x,y,z,w)
+    // convert to (x/w,y/w,z/w)
+    for(int i=0;i<pts_4d.cols;i++){
+        Mat x = pts_4d.col(i);
+        x /= x.at<float>(3,0);
+        points.push_back(Point3d(x.at<float>(0,0),x.at<float>(1,0),x.at<float>(2,0)));
+    
+    }
+}
+    
 
 //g2o ba 优化 3d-2d result
 class VertexPose : public g2o::BaseVertex<6, Sophus::SE3d>{
