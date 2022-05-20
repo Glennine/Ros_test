@@ -29,7 +29,10 @@ void odometry_calculation::calculate_match_pose(const cv::Mat &K,
                           Mat& R, Mat& t,
                           vector<Point3d>& points_3d,
                           vector<Point3d>& points_3d_new){
+<<<<<<< HEAD
     chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
+=======
+>>>>>>> caad49f388ed67001d118b0e75788fa6640c8981
     vector<Point3f> pts_3d;
     vector<Point2f> pts_2d;
         for(DMatch m:matches){
@@ -47,8 +50,11 @@ void odometry_calculation::calculate_match_pose(const cv::Mat &K,
     Rodrigues(r, R);//旋转向量转化为旋转矩阵
     //Mat pt2_trans = R*( Mat_<double>(3,1) << points_3d[i].x, points_3d[i].y, points_3d[i].z ) + t;
     estimate_pose.triangulation(keypoints_1, keypoints_2, matches, R, t,points_3d_new);
+<<<<<<< HEAD
     chrono::steady_clock::time_point t2 = chrono::steady_clock::now();
 
+=======
+>>>>>>> caad49f388ed67001d118b0e75788fa6640c8981
                           }
 
 void odometry_calculation::calculate_optial_pose(const cv::Mat &K,
@@ -59,6 +65,7 @@ void odometry_calculation::calculate_optial_pose(const cv::Mat &K,
                            vector<Point3d>& points_3d,
                            vector<Point3d>& points_3d_new){
     //use PnP
+<<<<<<< HEAD
     std::vector<Point3f> pts_3d;
     std::vector<Point2f> pts_2d;
     for (int i = 0; i < pt2.size(); i++)
@@ -76,6 +83,19 @@ void odometry_calculation::calculate_optial_pose(const cv::Mat &K,
     Rodrigues(r, R);//旋转向量转化为旋转矩阵
     estimate_pose.flow_triangulation(pt1,pt2,status,R,t,points_3d_new);
 
+=======
+    std::vector<Point3f> pt3d;
+    std::vector<Point2f> pt2d;
+    for (int i = 0; i < pt1.size(); i++)
+    {
+        if (status[i])
+        {
+            pt3d.push_back(Point3f(pt1[i].x, pt1[i].y, 0));
+            pt2d.push_back(pt2[i]);
+        }
+    }
+    solvePnP(pt3d,pt2d,K, Mat(),R,t);
+>>>>>>> caad49f388ed67001d118b0e75788fa6640c8981
                            }
 
 void odometry_calculation::calculate_3d_2d_pose(const cv::Mat &K,
