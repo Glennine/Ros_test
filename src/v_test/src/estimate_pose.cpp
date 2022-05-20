@@ -6,7 +6,7 @@
 #include "v_test/estimate_pose.h"
 using namespace std;
 using namespace cv;
-int Flag = 0;
+int Flag = 0;//change pose style
 typedef vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> Vector2dVector;
 typedef vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVector;
 Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
