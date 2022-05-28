@@ -5,7 +5,8 @@
 using namespace std;
 //estimate_pose estimate_pose;
 //string DATA_PATH = "/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/";
-boost::format fmt_file("/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/%010d.png");  
+//boost::format fmt_file("/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/%010d.png");  
+boost::format fmt_file("/home/g/Downloads/00/image_0/%06d.png");
 Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
 String pose_file = "/home/g/CLionProjects/Ros_test/src/v_test/results/VO_result.txt";
 int pose_flag = 0;
@@ -25,19 +26,20 @@ int main(int argc,char **argv){
     while (nh.ok()) { // 循环发布图像
         //string file_name = DATA_PATH + "image_02/data/" + ("%010d"%frame).str() + ".png";
         string file_name = (fmt_file%frame_i).str();
-        cv::Mat image = cv::imread(file_name, 1); //读取图像
+        cv::Mat image = cv::imread(file_name, 0); //读取图像 gray 0 color 1
         if (frame_i==0){
             //init R,t
             image_cur = image;
-            R = (Mat_<double>(3, 3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
-            t = (Mat_<double>(3, 1) << 0, 1, 0);
+            R = (Mat_<double>(3, 3) << 1, 0, 0, 0, 0, 1, 0, 0, 0);
+            t = (Mat_<double>(3, 1) << 0, 0, 0);
             ROS_INFO("init R,t");}
         else if (frame_i==1) 
         {   
             image_cur = image;
             ROS_INFO("2 pictures init");
             estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
-            odometry_calculation.init(K,keypoints_pre,keypoints_cur,matches,R,t,points_3d_new);
+            ROS_INFO("find matches");
+            odometry_calculation.init(K,keypoints_pre,keypoints_cur,matches,R_pre,t_pre,R,t,points_3d_new);
             //need change to match count over 50 to continue.
             ROS_INFO_STREAM("R: " << R);
             ROS_INFO_STREAM("t: " << t);
@@ -62,10 +64,10 @@ int main(int argc,char **argv){
         //calculate the pose of the camera
         if (pose_flag == 0){
             ROS_INFO_STREAM("use match to calculate the pose");
-            odometry_calculation.calculate_match_pose(K,keypoints_pre,keypoints_cur,matches,R,t,points_3d,points_3d_new);
+            odometry_calculation.calculate_match_pose(K,keypoints_pre,keypoints_cur,matches,R_pre,t_pre,R,t,points_3d,points_3d_new);
         }else if (pose_flag == 1){
             ROS_INFO_STREAM("use optical flow to calculate the pose");
-            odometry_calculation.calculate_optial_pose(K,keypoints2f_pre,keypoints2f_cur,status,R,t,points_3d,points_3d_new);
+            odometry_calculation.calculate_optial_pose(K,keypoints2f_pre,keypoints2f_cur,status,R_pre,t_pre,R,t,points_3d,points_3d_new);
         }  
         ROS_INFO_STREAM("R: " << R);
         ROS_INFO_STREAM("t: " << t);

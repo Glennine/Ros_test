@@ -40,6 +40,7 @@ void triangulation(//must have translation vector
         const vector<KeyPoint> &keypoint_1,
         const vector<KeyPoint> &keypoint_2,
         const std::vector<DMatch> &matches,
+        const Mat &R_pre, const Mat &t_pre,
         const Mat &R, const Mat &t,
         vector<Point3d> &points);
 
@@ -47,6 +48,7 @@ void flow_triangulation(//must have translation vector
         const vector<Point2f> &pt1,
         const vector<Point2f> &pt2,
         const vector<uchar> &status,
+        const Mat &R_pre, const Mat &t_pre,
         const Mat &R, const Mat &t,
         vector<Point3d> &points);
 

@@ -14,6 +14,7 @@ void init(const cv::Mat &K,
                           std::vector<KeyPoint>& keypoints_1,
                           std::vector<KeyPoint>& keypoints_2,
                           std::vector<cv::DMatch>& matches,
+                          Mat &R_pre, Mat &t_pre,
                           Mat &R, Mat &t,
                           vector<Point3d>& points_3d_new);
     
@@ -21,6 +22,7 @@ void calculate_match_pose(const cv::Mat &K,
                           std::vector<KeyPoint>& keypoints_1,
                           std::vector<KeyPoint>& keypoints_2,
                           std::vector<DMatch>& matches,
+                          Mat &R_pre, Mat &t_pre,
                           Mat& R, Mat& t,
                           vector<Point3d>& points_3d,
                           vector<Point3d>& points_3d_new);
@@ -29,6 +31,7 @@ void calculate_optial_pose(const cv::Mat &K,
                            std::vector<Point2f>& pt1,
                            std::vector<Point2f>& pt2,
                            std::vector<uchar> &status,
+                           Mat &R_pre, Mat &t_pre,
                            Mat& R, Mat& t,
                            vector<Point3d>& points_3d,
                           vector<Point3d>& points_3d_new);

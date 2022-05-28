@@ -206,12 +206,13 @@ void estimate_pose::triangulation(
   const vector<KeyPoint> &keypoint_1,
   const vector<KeyPoint> &keypoint_2,
   const std::vector<DMatch> &matches,
+  const Mat &R_pre, const Mat &t_pre,
   const Mat &R, const Mat &t,
   vector<Point3d> &points){
   Mat T1 = (Mat_<double>(3,4) <<
-    1,0,0,0,
-    0,1,0,0,
-    0,0,1,0);
+    R_pre.at<double>(0,0),R_pre.at<double>(0,1),R_pre.at<double>(0,2),t_pre.at<double>(0,0),
+    R_pre.at<double>(1,0),R_pre.at<double>(1,1),R_pre.at<double>(1,2),t_pre.at<double>(1,0),
+    R_pre.at<double>(2,0),R_pre.at<double>(2,1),R_pre.at<double>(2,2),t_pre.at<double>(2,0));
     Mat T2 = (Mat_<double>(3,4) <<
     R.at<double>(0,0),R.at<double>(0,1),R.at<double>(0,2),t.at<double>(0,0),
     R.at<double>(1,0),R.at<double>(1,1),R.at<double>(1,2),t.at<double>(1,0),
@@ -238,12 +239,13 @@ void estimate_pose::flow_triangulation(
     const vector<Point2f> &pt1,
     const vector<Point2f> &pt2,
     const std::vector<uchar> &status,
+    const Mat &R_pre, const Mat &t_pre,
     const Mat &R, const Mat &t,
     vector<Point3d> &points){
         Mat T1 = (Mat_<double>(3,4) <<
-    1,0,0,0,
-    0,1,0,0,
-    0,0,1,0);
+    R_pre.at<double>(0,0),R_pre.at<double>(0,1),R_pre.at<double>(0,2),t_pre.at<double>(0,0),
+    R_pre.at<double>(1,0),R_pre.at<double>(1,1),R_pre.at<double>(1,2),t_pre.at<double>(1,0),
+    R_pre.at<double>(2,0),R_pre.at<double>(2,1),R_pre.at<double>(2,2),t_pre.at<double>(2,0));
     Mat T2 = (Mat_<double>(3,4) <<
     R.at<double>(0,0),R.at<double>(0,1),R.at<double>(0,2),t.at<double>(0,0),
     R.at<double>(1,0),R.at<double>(1,1),R.at<double>(1,2),t.at<double>(1,0),
@@ -380,7 +382,7 @@ cv::Mat estimate_pose::visualizeOpticalFlow(const Mat &img_2,
                            std::vector<cv::Point2f>& pt2,
                            vector<uchar> status){
     Mat img_flow = img_2.clone();
-    //cv::cvtColor(img_flow, img_flow, cv::COLOR_GRAY2BGR);
+    cv::cvtColor(img_flow, img_flow, cv::COLOR_GRAY2BGR);
     //we convert the color to gray, because we only need the flow
     for (int i = 0; i < pt2.size(); ++i) {
     //     if (status[i]==1) {
