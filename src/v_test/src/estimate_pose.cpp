@@ -11,75 +11,6 @@ typedef vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> Vecto
 typedef vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVector;
 Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
 
-//         // verify the estimation
-//         for(DMatch m:matches){
-//             Point2d pt1 = estimate_pose.pixel2camera(keypoints_1[m.queryIdx].pt, K);
-//             Mat y1 = (Mat_<double>(3, 1) << pt1.x, pt1.y, 1); //像素坐标转相机坐标 (x/z,y/z,1)
-//             Point2d pt2 = estimate_pose.pixel2camera(keypoints_2[m.trainIdx].pt, K);
-//             Mat y2 = (Mat_<double>(3, 1) << pt2.x, pt2.y, 1);
-//             Mat d = y2.t()*t_x*R*y1; //if d=0, the two points are in the same line
-//             cout<<"epipolar constraint= "<<endl<<d<<endl;}
-//             cout<<"2d-2d:\nR= "<<endl<<R<<endl<<"t="<<endl<<t<<endl;
-//         //triangulate to achieve depth information
-//         vector<Point3d> points_3d;
-//         estimate_pose.triangulation(keypoints_1, keypoints_2, matches, R, t, points_3d);
-//         //verdify the triangulation
-//          Mat img1_plot = img1.clone();
-//          Mat img2_plot = img2.clone();
-// //         for (int i = 0; i < matches.size(); i++) {
-// //             // 第一个图
-// //             float depth1 = points_3d[i].z;
-// //             cout << "depth: " << depth1 << endl;
-// //             Point2d pt1_cam = pixel2camera(keypoints_1[matches[i].queryIdx].pt, K);
-//         //     cv::circle(img1_plot, keypoints_1[matches[i].queryIdx].pt, 2, get_color(depth1), 2);
-
-//         //     // 第二个图
-//         //     Mat pt2_trans = R * (Mat_<double>(3, 1) << points_3d[i].x, points_3d[i].y, points_3d[i].z) + t;
-//         //     float depth2 = pt2_trans.at<double>(2, 0);
-//         //     cv::circle(img2_plot, keypoints_2[matches[i].trainIdx].pt, 2, get_color(depth2), 2);
-//         //}
-//         // cv::imshow("img 1", img1_plot);
-//         // cv::imshow("img 2", img2_plot);
-//         // cv::waitKey();
-
-//     }else{
-//         cout<<"pose estimate by 3d-2d"<<endl;
-//         Mat d1 = imread(file_3,IMREAD_UNCHANGED);
-//         vector<Point3f> pts_3d;
-//         vector<Point2f> pts_2d;
-//         for(DMatch m:matches){
-//             ushort d = d1.ptr<unsigned short>(int(keypoints_1[m.queryIdx].pt.y))[int(keypoints_1[m.queryIdx].pt.x)];
-//             //find keypoint1 match the depth info on d1 image
-//             if (d == 0)   // bad depth
-//             continue;
-//             float dd = d / 5000.0; // depth in meter
-//             Point2d pt1 = estimate_pose.pixel2camera(keypoints_1[m.queryIdx].pt, K);
-//             pts_3d.push_back(Point3f(pt1.x*dd, pt1.y*dd, dd));
-//             pts_2d.push_back(keypoints_2[m.trainIdx].pt);
-//         }
-//         cout << "3d-2d pairs: " << pts_3d.size() << endl;
-//         Mat r,t;
-//         t1 = chrono::steady_clock::now();
-//         solvePnP(pts_3d, pts_2d, K, Mat(), r, t);//重投影误差
-//         Mat R;
-//         Rodrigues(r, R); // r为旋转向量形式，用Rodrigues公式转换为矩阵
-//         t2 = chrono::steady_clock::now();
-//         cout<<"solvePnP time used: "<<chrono::duration_cast<chrono::duration<double>>(t2-t1).count()<<" seconds."<<endl;
-//         cout << "3d-2d:\nR = " << endl << R << endl;
-//         cout << "t = " << endl << t << endl;
-//         //3d-2d pose estimate BA method
-//         Vector2dVector pts_2d_eigen;
-//         Vector3dVector pts_3d_eigen;
-//         cout << "calling bundle adjustment by g2o" << endl;
-//         Sophus::SE3d pose_g2o;
-//         t1 = chrono::steady_clock::now();
-//         estimate_pose.BA_g2o(pts_3d_eigen, pts_2d_eigen, K, pose_g2o);
-//         t2 = chrono::steady_clock::now();
-//         cout << "solve pnp by g2o cost time: " << chrono::duration_cast<chrono::duration<double>>(t2 - t1).count()<< " seconds." << endl;
-
-//     }
-
-
 //use feature matching(ORB/flow/direct) to find the essential matrix
 void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& img_2,
                           std::vector<cv::KeyPoint>& RR_keypoints_1,
@@ -90,11 +21,14 @@ void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& im
     Mat descriptors_1, descriptors_2;
     //use orb to find the keypoints and descriptors
     Ptr<FeatureDetector> detector = ORB::create();
+    Ptr<GFTTDetector> gftt_ = cv::GFTTDetector::create(500, 0.2, 1.0, 3, false, 0.04);
+    cv::Mat mask1(img_1.size(), CV_8UC1, 255);
+    cv::Mat mask2(img_2.size(), CV_8UC1, 255);
     Ptr<DescriptorExtractor> descriptor = ORB::create();
     Ptr<DescriptorMatcher> matcher  = DescriptorMatcher::create("BruteForce-Hamming");
     //FAST
-    detector->detect(img_1, keypoints_1);
-    detector->detect(img_2, keypoints_2);
+    detector->detect(img_1, keypoints_1,mask1);
+    detector->detect(img_2, keypoints_2,mask2);
     //compute the descriptors
     descriptor->compute(img_1, keypoints_1, descriptors_1);
     descriptor->compute(img_2, keypoints_2, descriptors_2);
@@ -131,7 +65,6 @@ void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& im
             index++;
         }
     }
-
 }
 
 void estimate_pose::find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2,
@@ -140,9 +73,20 @@ void estimate_pose::find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2
                             std::vector<uchar> status){
     //init
     vector<KeyPoint> keypoint_1;
-    // Ptr<GFTTDetector> detector_gftt = GFTTDetector::create(500, 0.01, 1, 3, false, 0.04);
-    // detector_gftt->detect(img_1, keypoint_1);
-    Ptr<FeatureDetector> detector = ORB::create();
+    // Ptr<GFTTDetector> detector = GFTTDetector::create(500, 0.01, 1, 3, false, 0.04);
+    // cv::Mat mask1(img_1.size(), CV_8UC1, 255);
+    // detector->detect(img_1, keypoint_1,mask1);
+    int num_features = 500;
+      float scaleFactor = 1.2f;
+      int nlevels = 8;
+      int edgeThreshold = 31;
+      int firstLevel = 0;
+      int WTA_K = 2;
+      cv::ORB::ScoreType scoreType = cv::ORB::FAST_SCORE;
+      int patchSize = 31;
+      int fastThreshold = 20;
+    Ptr<FeatureDetector> detector = ORB::create(num_features, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, scoreType,
+                                 patchSize, fastThreshold);
     detector->detect(img_1, keypoint_1);
     //compute the optical flow
     for(int i = 0; i < keypoint_1.size(); i++){
@@ -150,7 +94,9 @@ void estimate_pose::find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2
     vector<float> error;
     //cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status, error);
     std::vector<uchar> status_tmp;
-    cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status_tmp, error);
+    cv::TermCriteria criteria = cv::TermCriteria((cv::TermCriteria::COUNT) + (cv::TermCriteria::EPS), 10, 0.03);
+    cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status_tmp, error,cv::Size(15, 15), 2,
+                           criteria);
     reduceVector(pt1,status_tmp);
     reduceVector(pt2,status_tmp);
     cv::findFundamentalMat(pt1,pt2, cv::FM_RANSAC, 1, 0.99, status);

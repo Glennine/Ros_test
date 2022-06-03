@@ -6,7 +6,7 @@ using namespace std;
 //estimate_pose estimate_pose;
 //string DATA_PATH = "/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/";
 //boost::format fmt_file("/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/%010d.png");  
-boost::format fmt_file("/home/g/Downloads/00/image_0/%06d.png");
+boost::format fmt_file("/home/g/Downloads/07/image_0/%06d.png");
 Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
 String pose_file = "/home/g/CLionProjects/Ros_test/src/v_test/results/VO_result.txt";
 int pose_flag = 0;
@@ -36,9 +36,7 @@ int main(int argc,char **argv){
         else if (frame_i==1) 
         {   
             image_cur = image;
-            ROS_INFO("2 pictures init");
             estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
-            ROS_INFO("find matches");
             odometry_calculation.init(K,keypoints_pre,keypoints_cur,matches,R_pre,t_pre,R,t,points_3d_new);
             //need change to match count over 50 to continue.
             ROS_INFO_STREAM("R: " << R);
@@ -53,10 +51,10 @@ int main(int argc,char **argv){
         ROS_INFO_STREAM("image publish");
         //match image publish
         estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
-        cv::Mat match_image = 
-        estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
-        cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
-        pub_matches.publish(matches_viz_cvbridge.toImageMsg());
+        // cv::Mat match_image = 
+        // estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
+        // cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
+        // pub_matches.publish(matches_viz_cvbridge.toImageMsg());
         estimate_pose.find_feature_flow(image_pre,image_cur,keypoints2f_pre,keypoints2f_cur,status);
         cv::Mat optical_flow_match_image = estimate_pose.visualizeOpticalFlow(image_cur, keypoints2f_pre,keypoints2f_cur,status);
         cv_bridge::CvImage optical_flow_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::RGB8,optical_flow_match_image);
@@ -71,9 +69,6 @@ int main(int argc,char **argv){
         }  
         ROS_INFO_STREAM("R: " << R);
         ROS_INFO_STREAM("t: " << t);
-        //fout << "%f,%f,%f,%f,%f,%f,%f,%f,%f",R.at<double>(0,0),R.at<double>(0,1),R.at<double>(0,2),R.at<double>(1,0),R.at<double>(1,1),R.at<double>(1,2),\
-        //R.at<double>(2,0),R.at<double>(2,1),R.at<double>(2,2);
-        //fout << "%f,%f,%f",t.at<double>(0,0),t.at<double>(1,0),t.at<double>(2,0);
         }
         fout << R.at<double>(0,0)<<" "<<R.at<double>(0,1)<<" "<<R.at<double>(0,2)<<" "<<R.at<double>(1,0)<<" "<<R.at<double>(1,1)<<" "<<R.at<double>(1,2)<<" "<<\
         R.at<double>(2,0)<<" "<<R.at<double>(2,1)<<" "<<R.at<double>(2,2)<<" ";

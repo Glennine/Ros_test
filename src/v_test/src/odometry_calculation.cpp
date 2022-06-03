@@ -69,7 +69,7 @@ void odometry_calculation::calculate_optial_pose(const cv::Mat &K,
     {   ushort d = points_3d[i].z;
         //if ((status[i])&&(d>0)) 
         if (d>0)
-        {   float dd = d/5000.0;
+        {   float dd = d/100.0;// inital 5000
             Point2d new_pt1 = estimate_pose.pixel2camera(pt1[i], K);
             pts_3d.push_back(Point3f(new_pt1.x*dd,new_pt1.y*dd,dd));
             pts_2d.push_back(pt2[i]);
