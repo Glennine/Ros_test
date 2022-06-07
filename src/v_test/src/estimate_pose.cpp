@@ -17,18 +17,44 @@ void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& im
                           std::vector<cv::KeyPoint>& RR_keypoints_2,
                           std::vector<cv::DMatch>& matches){
     //-- init
+    matches.clear();
+    RR_keypoints_1.clear();
+    RR_keypoints_2.clear();
     vector<KeyPoint> keypoints_1,keypoints_2;
     Mat descriptors_1, descriptors_2;
     //use orb to find the keypoints and descriptors
-    Ptr<FeatureDetector> detector = ORB::create();
-    Ptr<GFTTDetector> gftt_ = cv::GFTTDetector::create(500, 0.2, 1.0, 3, false, 0.04);
-    cv::Mat mask1(img_1.size(), CV_8UC1, 255);
-    cv::Mat mask2(img_2.size(), CV_8UC1, 255);
+    // Ptr<FeatureDetector> detector = ORB::create();
+    // Ptr<GFTTDetector> gftt_ = cv::GFTTDetector::create(500, 0.2, 1.0, 3, false, 0.04);
+    // cv::Mat mask1(img_1.size(), CV_8UC1, 255);
+    // cv::Mat mask2(img_2.size(), CV_8UC1, 255);
+    //FAST
+    // detector->detect(img_1, keypoints_1,mask1);
+    // detector->detect(img_2, keypoints_2,mask2);
+    //ShiTomashi算法
+    int block_size = 5;
+    double min_distance = block_size * 1.5;
+    int maxCorners = 1024;
+    double quality_level = 0.03;  // minimal accepted quality of image corners
+    double k = 0.04;
+    std::vector<cv::Point2f> corners_1,corners_2;
+    cv::goodFeaturesToTrack(img_1, corners_1, maxCorners, quality_level, min_distance, cv::Mat(), block_size, false, k);
+    cv::goodFeaturesToTrack(img_2, corners_2, maxCorners, quality_level, min_distance, cv::Mat(), block_size, false, k);
+    for (auto it = corners_1.begin(); it != corners_1.end(); ++it)
+    {
+      cv::KeyPoint new_keypoint;
+      new_keypoint.pt = cv::Point2f((*it).x, (*it).y);
+      new_keypoint.size = block_size;
+      keypoints_1.push_back(new_keypoint);
+    }
+    for (auto it = corners_2.begin(); it != corners_2.end(); ++it)
+    {
+      cv::KeyPoint new_keypoint;
+      new_keypoint.pt = cv::Point2f((*it).x, (*it).y);
+      new_keypoint.size = block_size;
+      keypoints_2.push_back(new_keypoint);
+    }
     Ptr<DescriptorExtractor> descriptor = ORB::create();
     Ptr<DescriptorMatcher> matcher  = DescriptorMatcher::create("BruteForce-Hamming");
-    //FAST
-    detector->detect(img_1, keypoints_1,mask1);
-    detector->detect(img_2, keypoints_2,mask2);
     //compute the descriptors
     descriptor->compute(img_1, keypoints_1, descriptors_1);
     descriptor->compute(img_2, keypoints_2, descriptors_2);
@@ -76,21 +102,30 @@ void estimate_pose::find_feature_flow(const cv::Mat& img_1, const cv::Mat& img_2
     // Ptr<GFTTDetector> detector = GFTTDetector::create(500, 0.01, 1, 3, false, 0.04);
     // cv::Mat mask1(img_1.size(), CV_8UC1, 255);
     // detector->detect(img_1, keypoint_1,mask1);
-    int num_features = 500;
-      float scaleFactor = 1.2f;
-      int nlevels = 8;
-      int edgeThreshold = 31;
-      int firstLevel = 0;
-      int WTA_K = 2;
-      cv::ORB::ScoreType scoreType = cv::ORB::FAST_SCORE;
-      int patchSize = 31;
-      int fastThreshold = 20;
-    Ptr<FeatureDetector> detector = ORB::create(num_features, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, scoreType,
-                                 patchSize, fastThreshold);
-    detector->detect(img_1, keypoint_1);
+    // int num_features = 500;
+    //   float scaleFactor = 1.2f;
+    //   int nlevels = 8;
+    //   int edgeThreshold = 31;
+    //   int firstLevel = 0;
+    //   int WTA_K = 2;
+    //   cv::ORB::ScoreType scoreType = cv::ORB::FAST_SCORE;
+    //   int patchSize = 31;
+    //   int fastThreshold = 20;
+    // Ptr<FeatureDetector> detector = ORB::create(num_features, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, scoreType,
+    //                              patchSize, fastThreshold);
+    // detector->detect(img_1, keypoint_1);
     //compute the optical flow
-    for(int i = 0; i < keypoint_1.size(); i++){
-        pt1.push_back(keypoint_1[i].pt);}
+    // for(int i = 0; i < keypoint_1.size(); i++){
+    //     pt1.push_back(keypoint_1[i].pt);}
+
+    //ShiTomasi corner detector
+    int block_size = 5;
+    double min_distance = block_size * 1.5;
+    int maxCorners = 1024;
+    double quality_level = 0.03;  // minimal accepted quality of image corners
+    double k = 0.04;
+    //std::vector<cv::Point2f> corners;
+    cv::goodFeaturesToTrack(img_1, pt1, maxCorners, quality_level, min_distance, cv::Mat(), block_size, false, k);
     vector<float> error;
     //cv::calcOpticalFlowPyrLK(img_1, img_2, pt1, pt2, status, error);
     std::vector<uchar> status_tmp;

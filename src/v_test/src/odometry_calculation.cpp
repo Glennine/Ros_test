@@ -40,13 +40,15 @@ void odometry_calculation::calculate_match_pose(const cv::Mat &K,
             //find keypoint1 match the depth info on d1 image
             if (d > 0)   // bad depth
             {
-            float dd = d / 5000.0; // depth in meter
+            //float dd = d / 5000.0; // depth in meter for tum
+            float dd = d/1000;
             Point2d pt1 = estimate_pose.pixel2camera(keypoints_1[m.queryIdx].pt, K);
             pts_3d.push_back(Point3f(pt1.x*dd, pt1.y*dd, dd));
             pts_2d.push_back(keypoints_2[m.trainIdx].pt);}
         }
     Mat r;
-    solvePnP(pts_3d, pts_2d, K, Mat(), r, t,false,cv::SOLVEPNP_EPNP);
+    //solvePnP(pts_3d, pts_2d, K, Mat(), r, t,false,cv::SOLVEPNP_EPNP);
+    solvePnPRansac(pts_3d, pts_2d, K, Mat(), r, t,false,100,2.0,0.99,cv::noArray(),cv::SOLVEPNP_EPNP);
     Rodrigues(r, R);//旋转向量转化为旋转矩阵
     //Mat pt2_trans = R*( Mat_<double>(3,1) << points_3d[i].x, points_3d[i].y, points_3d[i].z ) + t;
     estimate_pose.triangulation(keypoints_1, keypoints_2, matches, R_pre,t_pre,R, t,points_3d_new);
@@ -69,7 +71,7 @@ void odometry_calculation::calculate_optial_pose(const cv::Mat &K,
     {   ushort d = points_3d[i].z;
         //if ((status[i])&&(d>0)) 
         if (d>0)
-        {   float dd = d/100.0;// inital 5000
+        {   float dd = d/5000.0;// inital 5000
             Point2d new_pt1 = estimate_pose.pixel2camera(pt1[i], K);
             pts_3d.push_back(Point3f(new_pt1.x*dd,new_pt1.y*dd,dd));
             pts_2d.push_back(pt2[i]);

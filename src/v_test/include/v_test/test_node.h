@@ -17,3 +17,4 @@ std::vector<cv::DMatch> matches;
 std::vector<uchar> status;
 std::vector<cv::Point2f> keypoints2f_pre,keypoints2f_cur,keypoints_2f;
 ofstream fout;
+cv::Ptr<cv::CLAHE> clahe;

@@ -7,7 +7,8 @@ using namespace std;
 //string DATA_PATH = "/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/";
 //boost::format fmt_file("/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/%010d.png");  
 boost::format fmt_file("/home/g/Downloads/07/image_0/%06d.png");
-Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
+//Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
+Mat K = (Mat_<double>(3, 3) << 707.0912, 0, 601.8873, 0, 707.0912, 183.1104, 0, 0, 1); //相机内参
 String pose_file = "/home/g/CLionProjects/Ros_test/src/v_test/results/VO_result.txt";
 int pose_flag = 0;
 int main(int argc,char **argv){
@@ -26,7 +27,7 @@ int main(int argc,char **argv){
     while (nh.ok()) { // 循环发布图像
         //string file_name = DATA_PATH + "image_02/data/" + ("%010d"%frame).str() + ".png";
         string file_name = (fmt_file%frame_i).str();
-        cv::Mat image = cv::imread(file_name, 0); //读取图像 gray 0 color 1
+        cv::Mat image = cv::imread(file_name,0); //读取图像 gray 0 color 1
         if (frame_i==0){
             //init R,t
             image_cur = image;
@@ -46,15 +47,17 @@ int main(int argc,char **argv){
         image_cur = image;
         ROS_INFO_STREAM("frame_i: " << frame_i);
         //original image publish
-        sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8",image).toImageMsg();
+        sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "mono8",image).toImageMsg();
         pub.publish(msg);
         ROS_INFO_STREAM("image publish");
+        // clahe = cv::createCLAHE(2.0);
+        // clahe->apply(image,image); //对图像进行直方图均衡化
         //match image publish
         estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
-        // cv::Mat match_image = 
-        // estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
-        // cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
-        // pub_matches.publish(matches_viz_cvbridge.toImageMsg());
+        cv::Mat match_image = 
+        estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
+        cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
+        pub_matches.publish(matches_viz_cvbridge.toImageMsg());
         estimate_pose.find_feature_flow(image_pre,image_cur,keypoints2f_pre,keypoints2f_cur,status);
         cv::Mat optical_flow_match_image = estimate_pose.visualizeOpticalFlow(image_cur, keypoints2f_pre,keypoints2f_cur,status);
         cv_bridge::CvImage optical_flow_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::RGB8,optical_flow_match_image);
