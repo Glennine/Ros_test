@@ -9,7 +9,7 @@ using namespace cv;
 int Flag = 0;//change pose style
 typedef vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> Vector2dVector;
 typedef vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> Vector3dVector;
-Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
+Mat K = (Mat_<double>(3, 3) << 707.0912, 0, 601.8873, 0, 707.0912, 183.1104, 0, 0, 1); //相机内参
 
 //use feature matching(ORB/flow/direct) to find the essential matrix
 void estimate_pose::find_feature_matches(const cv::Mat& img_1, const cv::Mat& img_2,
