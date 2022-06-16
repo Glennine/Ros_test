@@ -24,6 +24,7 @@ int main(int argc,char **argv){
     cv::Mat R,t,R_pre,t_pre;
     vector<Point3d> points_3d,points_3d_new;
     ros::Rate loop_rate(10); //10HZ
+    P = (Mat_<double>(4,4)<<1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
     while (nh.ok()) { // 循环发布图像
         //string file_name = DATA_PATH + "image_02/data/" + ("%010d"%frame).str() + ".png";
         string file_name = (fmt_file%frame_i).str();
@@ -53,29 +54,49 @@ int main(int argc,char **argv){
         // clahe = cv::createCLAHE(2.0);
         // clahe->apply(image,image); //对图像进行直方图均衡化
         //match image publish
-        estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
-        cv::Mat match_image = 
-        estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
-        cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
-        pub_matches.publish(matches_viz_cvbridge.toImageMsg());
-        estimate_pose.find_feature_flow(image_pre,image_cur,keypoints2f_pre,keypoints2f_cur,status);
-        cv::Mat optical_flow_match_image = estimate_pose.visualizeOpticalFlow(image_cur, keypoints2f_pre,keypoints2f_cur,status);
-        cv_bridge::CvImage optical_flow_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::RGB8,optical_flow_match_image);
-        pub_opticalflow.publish(optical_flow_viz_cvbridge.toImageMsg());
         //calculate the pose of the camera
         if (pose_flag == 0){
+            estimate_pose.find_feature_matches(image_pre,image_cur,keypoints_pre,keypoints_cur,matches);
+            cv::Mat match_image = 
+            estimate_pose.visualizeMatches(image_pre, image_cur, keypoints_pre,keypoints_cur, matches);
+            cv_bridge::CvImage matches_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), "bgr8", match_image);
+            pub_matches.publish(matches_viz_cvbridge.toImageMsg());
             ROS_INFO_STREAM("use match to calculate the pose");
             odometry_calculation.calculate_match_pose(K,keypoints_pre,keypoints_cur,matches,R_pre,t_pre,R,t,points_3d,points_3d_new);
         }else if (pose_flag == 1){
+            estimate_pose.find_feature_flow(image_pre,image_cur,keypoints2f_pre,keypoints2f_cur,status);
+            cv::Mat optical_flow_match_image = estimate_pose.visualizeOpticalFlow(image_cur, keypoints2f_pre,keypoints2f_cur,status);
+            cv_bridge::CvImage optical_flow_viz_cvbridge = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::RGB8,optical_flow_match_image);
+            pub_opticalflow.publish(optical_flow_viz_cvbridge.toImageMsg());
             ROS_INFO_STREAM("use optical flow to calculate the pose");
             odometry_calculation.calculate_optial_pose(K,keypoints2f_pre,keypoints2f_cur,status,R_pre,t_pre,R,t,points_3d,points_3d_new);
         }  
         ROS_INFO_STREAM("R: " << R);
         ROS_INFO_STREAM("t: " << t);
+        
+        vector<vector<double>> temp_R{{R.at<double>(0,0),R.at<double>(0,1),R.at<double>(0,2)},\
+        {R.at<double>(1,0),R.at<double>(1,1),R.at<double>(1,2)},{R.at<double>(2,0),R.at<double>(2,1),R.at<double>(2,2)}};
+        vector<vector<double>> temp_t{{t.at<double>(0,0)},{t.at<double>(1,0)},{t.at<double>(2,0)}};
+        for (int k = 0; k < temp_R.size() -1; k++)
+        {
+            for (int j = k + 1; j < temp_R.size(); j++)
+            {
+                swap(temp_R[k][j], temp_R[j][k]);
+            }
         }
-        fout << R.at<double>(0,0)<<" "<<R.at<double>(0,1)<<" "<<R.at<double>(0,2)<<" "<<R.at<double>(1,0)<<" "<<R.at<double>(1,1)<<" "<<R.at<double>(1,2)<<" "<<\
-        R.at<double>(2,0)<<" "<<R.at<double>(2,1)<<" "<<R.at<double>(2,2)<<" ";
-        fout <<t.at<double>(0,0)<<" "<<t.at<double>(1,0)<<" "<<t.at<double>(2,0);
+        vector<vector<double>> temp_ = mutil(temp_R,temp_t);
+        cv::Mat P_new = (Mat_<double>(4,4)<<temp_R[0][0],temp_R[0][1],temp_R[0][2],temp_t[0][0],\
+        temp_R[1][0],temp_R[1][1],temp_R[1][2],temp_[1][0],temp_R[2][0],temp_R[2][1],temp_R[2][2],\
+        temp_[2][0],0,0,0,1);
+        //P_new[0:3][0:3] = R.t();
+        //P_new[0:3][3] = (-R.t())*t;
+        P = P*P_new;
+        //change P to R
+        fout << P.at<double>(0,0)<<" "<<P.at<double>(0,1)<<" "<<P.at<double>(0,2)<<" "<<P.at<double>(1,0)<<" "<<P.at<double>(1,1)<<" "<<P.at<double>(1,2)<<" "<<\
+        P.at<double>(2,0)<<" "<<P.at<double>(2,1)<<" "<<P.at<double>(2,2)<<" ";
+        fout<<P.at<double>(0,3)<<" "<<P.at<double>(1,3)<<" "<<P.at<double>(2,3);
+        ROS_INFO_STREAM("each pose:"<< P);}
+        // fout <<t.at<double>(0,0)<<" "<<t.at<double>(1,0)<<" "<<t.at<double>(2,0);
         fout << endl;
         ros::spinOnce();
         loop_rate.sleep();
@@ -92,4 +113,25 @@ int main(int argc,char **argv){
 
     ROS_INFO_STREAM("publish the image done!");
 
+}
+
+vector<vector<double>> mutil(vector<vector<double>> m1, vector<vector<double>> m2) {
+    //两矩阵相乘(but in this problem, we need -R to calculate)
+    int m = m1.size();
+    int n = m1[0].size();
+    int p = m2[0].size();
+    vector<vector<double>> array;
+    vector<double> temparay;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < p; j++) {
+            double sum = 0;
+            for (int k = 0; k < n; k++) {
+                sum -= m1[i][k] * m2[k][j];
+            }
+            temparay.push_back(sum);
+        }
+        array.push_back(temparay);
+        temparay.erase(temparay.begin(), temparay.end());
+    }
+    return array;
 }

@@ -167,8 +167,8 @@ void estimate_pose::pose_estimation_2d2d(const cv::Mat &K,
         points2.push_back(keypoints_2[matches[i].trainIdx].pt);
     }
     //calculate the fundamental matrix
-    Mat fundamental_matrix;
-    fundamental_matrix = findFundamentalMat(points1, points2, FM_RANSAC);
+    // Mat fundamental_matrix;
+    // fundamental_matrix = findFundamentalMat(points1, points2, FM_RANSAC);
     //cout<<"fundamental matrix= "<<endl<<fundamental_matrix<<endl;
     //calculate the essential matrix
     Mat essential_matrix = findEssentialMat(points1, points2, K, RANSAC, 0.999, 1.0, noArray());
@@ -178,7 +178,7 @@ void estimate_pose::pose_estimation_2d2d(const cv::Mat &K,
     // Mat essential_matrix = findEssentialMat(points1, points2, focal_length, principal_point);
     //cout<<"essential matrix= "<<endl<<essential_matrix<<endl;
     //calculate homography matrix
-    Mat homography_matrix = findHomography(points1, points2, RANSAC, 3);
+    //Mat homography_matrix = findHomography(points1, points2, RANSAC, 3);
     //find the rotation and translation
     recoverPose(essential_matrix, points1, points2,K, R, t );//只是恢复移动的“结构性”，并不是真实值。
 }
@@ -365,11 +365,18 @@ cv::Mat estimate_pose::visualizeOpticalFlow(const Mat &img_2,
     Mat img_flow = img_2.clone();
     cv::cvtColor(img_flow, img_flow, cv::COLOR_GRAY2BGR);
     //we convert the color to gray, because we only need the flow
+    cv::RNG rng;
+    cv::Scalar color;
+    int r, g, b, j;
     for (int i = 0; i < pt2.size(); ++i) {
     //     if (status[i]==1) {
     //         cout<<pt1[i]<<" "<<pt2[i]<<endl;
-            cv::circle(img_flow, pt2[i], 3, cv::Scalar(0, 250, 0), -1);
-            cv::line(img_flow, pt1[i], pt2[i], cv::Scalar(0, 250, 0));
+            r = rng.uniform(0, 256);
+            g = rng.uniform(0, 256);
+            b = rng.uniform(0, 256);
+            color = cv::Scalar(r, g, b);
+            cv::circle(img_flow, pt2[i], 3, color, -1);
+            cv::line(img_flow, pt1[i], pt2[i], color, 1);
     //     }
     }
     return img_flow;

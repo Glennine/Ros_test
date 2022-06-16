@@ -18,3 +18,5 @@ std::vector<uchar> status;
 std::vector<cv::Point2f> keypoints2f_pre,keypoints2f_cur,keypoints_2f;
 ofstream fout;
 cv::Ptr<cv::CLAHE> clahe;
+cv::Mat P; // get the trajectory information
+vector<vector<double>> mutil(vector<vector<double>> m1, vector<vector<double>> m2);

@@ -48,8 +48,10 @@ void odometry_calculation::calculate_match_pose(const cv::Mat &K,
         }
     Mat r;
     //solvePnP(pts_3d, pts_2d, K, Mat(), r, t,false,cv::SOLVEPNP_EPNP);
+
     solvePnPRansac(pts_3d, pts_2d, K, Mat(), r, t,false,100,2.0,0.99,cv::noArray(),cv::SOLVEPNP_EPNP);
     Rodrigues(r, R);//旋转向量转化为旋转矩阵
+    //estimate_pose.pose_estimation_2d2d(K,keypoints_1, keypoints_2, matches, R, t);
     //Mat pt2_trans = R*( Mat_<double>(3,1) << points_3d[i].x, points_3d[i].y, points_3d[i].z ) + t;
     estimate_pose.triangulation(keypoints_1, keypoints_2, matches, R_pre,t_pre,R, t,points_3d_new);
     chrono::steady_clock::time_point t2 = chrono::steady_clock::now();
