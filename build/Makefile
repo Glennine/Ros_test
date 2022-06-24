@@ -376,6 +376,19 @@ std_msgs_generate_messages_cpp/fast:
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named rosgraph_msgs_generate_messages_cpp
+
+# Build rule for target.
+rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_cpp
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+#=============================================================================
 # Target rules for targets named roscpp_generate_messages_nodejs
 
 # Build rule for target.
@@ -610,6 +623,19 @@ odometry_calculation/fast:
 .PHONY : odometry_calculation/fast
 
 #=============================================================================
+# Target rules for targets named camera_node
+
+# Build rule for target.
+camera_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 camera_node
+.PHONY : camera_node
+
+# fast build rule for target.
+camera_node/fast:
+	$(MAKE) -f v_test/CMakeFiles/camera_node.dir/build.make v_test/CMakeFiles/camera_node.dir/build
+.PHONY : camera_node/fast
+
+#=============================================================================
 # Target rules for targets named std_msgs_generate_messages_py
 
 # Build rule for target.
@@ -634,19 +660,6 @@ v_test_node: cmake_check_build_system
 v_test_node/fast:
 	$(MAKE) -f v_test/CMakeFiles/v_test_node.dir/build.make v_test/CMakeFiles/v_test_node.dir/build
 .PHONY : v_test_node/fast
-
-#=============================================================================
-# Target rules for targets named rosgraph_msgs_generate_messages_cpp
-
-# Build rule for target.
-rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosgraph_msgs_generate_messages_cpp
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 # Help Target
 help:
@@ -677,6 +690,7 @@ help:
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_lisp"
@@ -695,9 +709,9 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... estimate_pose"
 	@echo "... odometry_calculation"
+	@echo "... camera_node"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... v_test_node"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
 .PHONY : help
 
 

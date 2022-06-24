@@ -12,6 +12,14 @@ Mat K = (Mat_<double>(3, 3) << 707.0912, 0, 601.8873, 0, 707.0912, 183.1104, 0, 
 String pose_file = "/home/g/CLionProjects/Ros_test/src/v_test/results/VO_result.txt";
 int pose_flag = 0;
 int main(int argc,char **argv){
+    cv::VideoCapture cap(0);
+    if(cap.isOpened())
+    {
+        cout<<"camera open success"<<endl;
+        Camera_node.init(argc,argv);
+    }
+    else cout<<"camera open failed"<<endl;
+    if (pose_flag==1){
     fout.open(pose_file);
     int frame_i = 0; // frame number
     ros::init(argc,argv,"ros_image_test"); //初始化节点
@@ -92,9 +100,10 @@ int main(int argc,char **argv){
         //P_new[0:3][3] = (-R.t())*t;
         P = P*P_new;
         //change P to R
-        fout << P.at<double>(0,0)<<" "<<P.at<double>(0,1)<<" "<<P.at<double>(0,2)<<" "<<P.at<double>(1,0)<<" "<<P.at<double>(1,1)<<" "<<P.at<double>(1,2)<<" "<<\
-        P.at<double>(2,0)<<" "<<P.at<double>(2,1)<<" "<<P.at<double>(2,2)<<" ";
-        fout<<P.at<double>(0,3)<<" "<<P.at<double>(1,3)<<" "<<P.at<double>(2,3);
+        fout << P.at<double>(0,0)<<" "<<P.at<double>(0,1)<<" "<<P.at<double>(0,2)<<" "<<P.at<double>(0,3)<<" "<<P.at<double>(1,0)<<" "<<P.at<double>(1,1)<<" "<<P.at<double>(1,2)\
+        <<" "<<P.at<double>(1,3)<<" "<<P.at<double>(2,0)<<" "<<P.at<double>(2,1)<<" "<<P.at<double>(2,2)<<" "<<" "<<P.at<double>(2,3);
+        // fout<<P.at<double>(0,3)<<" "<<P.at<double>(1,3)<<" "<<P.at<double>(2,3);
+        //fout<<P;
         ROS_INFO_STREAM("each pose:"<< P);}
         // fout <<t.at<double>(0,0)<<" "<<t.at<double>(1,0)<<" "<<t.at<double>(2,0);
         fout << endl;
@@ -111,7 +120,7 @@ int main(int argc,char **argv){
     //ros publish image to topic
     fout << flush; fout.close();
 
-    ROS_INFO_STREAM("publish the image done!");
+    ROS_INFO_STREAM("publish the image done!");}
 
 }
 

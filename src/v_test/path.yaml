@@ -1,0 +1,11 @@
+%YAML:1.0
+
+# the save path of times.txt 
+time_path: "/home/g/Downloads/test_data/"
+
+# the save path of image 
+image_path: "/home/g/Downloads/test_data/image/"
+
+# the name of image topic
+image_topic: /camera/color/image_raw 
+

@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/v_test_camera_node.dir/src/camera_node.cpp.o  -o /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_camera_node 

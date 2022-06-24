@@ -103,6 +103,17 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -123,17 +134,6 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -271,6 +271,21 @@ std_msgs_generate_messages_cpp: v_test/CMakeFiles/std_msgs_generate_messages_cpp
 std_msgs_generate_messages_cpp/fast:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
 .PHONY : std_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_cpp: v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 v_test/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
@@ -543,6 +558,21 @@ odometry_calculation/fast:
 .PHONY : odometry_calculation/fast
 
 # Convenience name for target.
+v_test/CMakeFiles/camera_node.dir/rule:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/camera_node.dir/rule
+.PHONY : v_test/CMakeFiles/camera_node.dir/rule
+
+# Convenience name for target.
+camera_node: v_test/CMakeFiles/camera_node.dir/rule
+
+.PHONY : camera_node
+
+# fast build rule for target.
+camera_node/fast:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/camera_node.dir/build.make v_test/CMakeFiles/camera_node.dir/build
+.PHONY : camera_node/fast
+
+# Convenience name for target.
 v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 .PHONY : v_test/CMakeFiles/std_msgs_generate_messages_py.dir/rule
@@ -572,20 +602,32 @@ v_test_node/fast:
 	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/v_test_node.dir/build.make v_test/CMakeFiles/v_test_node.dir/build
 .PHONY : v_test_node/fast
 
-# Convenience name for target.
-v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f CMakeFiles/Makefile2 v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-.PHONY : v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+src/camera_node.o: src/camera_node.cpp.o
 
-# Convenience name for target.
-rosgraph_msgs_generate_messages_cpp: v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : src/camera_node.o
 
-.PHONY : rosgraph_msgs_generate_messages_cpp
+# target to build an object file
+src/camera_node.cpp.o:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/camera_node.dir/build.make v_test/CMakeFiles/camera_node.dir/src/camera_node.cpp.o
+.PHONY : src/camera_node.cpp.o
 
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make v_test/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+src/camera_node.i: src/camera_node.cpp.i
+
+.PHONY : src/camera_node.i
+
+# target to preprocess a source file
+src/camera_node.cpp.i:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/camera_node.dir/build.make v_test/CMakeFiles/camera_node.dir/src/camera_node.cpp.i
+.PHONY : src/camera_node.cpp.i
+
+src/camera_node.s: src/camera_node.cpp.s
+
+.PHONY : src/camera_node.s
+
+# target to generate assembly for a file
+src/camera_node.cpp.s:
+	cd /home/g/CLionProjects/Ros_test/build && $(MAKE) -f v_test/CMakeFiles/camera_node.dir/build.make v_test/CMakeFiles/camera_node.dir/src/camera_node.cpp.s
+.PHONY : src/camera_node.cpp.s
 
 src/estimate_pose.o: src/estimate_pose.cpp.o
 
@@ -685,6 +727,8 @@ help:
 	@echo "... install/local"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... test"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_lisp"
@@ -705,10 +749,12 @@ help:
 	@echo "... list_install_components"
 	@echo "... estimate_pose"
 	@echo "... odometry_calculation"
+	@echo "... camera_node"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... v_test_node"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... test"
+	@echo "... src/camera_node.o"
+	@echo "... src/camera_node.i"
+	@echo "... src/camera_node.s"
 	@echo "... src/estimate_pose.o"
 	@echo "... src/estimate_pose.i"
 	@echo "... src/estimate_pose.s"

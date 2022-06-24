@@ -137,17 +137,18 @@ include_directories(
 )
 
 # Declare a C++ library
- #add_library(${PROJECT_NAME}
-  # src/test_node.cpp)
  add_library(estimate_pose SHARED
    src/estimate_pose.cpp)
  add_library(odometry_calculation SHARED
    src/odometry_calculation.cpp)
+  add_library(camera_node SHARED
+    src/camera_node.cpp)
 target_link_libraries(estimate_pose ${catkin_LIBRARIES} ${OpenCV_LIBS} g2o_core g2o_stuff "/usr/local/include/sophus" fmt glog::glog)
 set_target_properties(estimate_pose PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/odometry_calculation.h)
 target_link_libraries(odometry_calculation ${catkin_LIBRARIES} ${OpenCV_LIBS} g2o_core g2o_stuff "/usr/local/include/sophus" fmt glog::glog)
 set_target_properties(odometry_calculation PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/odometry_calculation.h)
-
+target_link_libraries(camera_node ${catkin_LIBRARIES} ${OpenCV_LIBS})
+set_target_properties(camera_node PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/camera_node.h)
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -156,7 +157,7 @@ set_target_properties(odometry_calculation PROPERTIES PUBLIC_HEADER include/${PR
 # Declare a C++ executable
 # With catkin_make all packages are built within a single CMake context
 # The recommended prefix ensures that target names across packages don't collide
- add_executable(${PROJECT_NAME}_node src/test_node.cpp)
+add_executable(${PROJECT_NAME}_node src/test_node.cpp) 
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -170,7 +171,7 @@ set_target_properties(odometry_calculation PROPERTIES PUBLIC_HEADER include/${PR
 
 # Specify libraries to link a library or executable target against
  target_link_libraries(${PROJECT_NAME}_node
-   ${catkin_LIBRARIES} ${OpenCV_LIBS} estimate_pose odometry_calculation
+   ${catkin_LIBRARIES} ${OpenCV_LIBS} estimate_pose odometry_calculation camera_node
  )
 
 #############
