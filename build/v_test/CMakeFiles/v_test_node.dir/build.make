@@ -254,6 +254,7 @@ v_test_node_EXTERNAL_OBJECTS =
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
+/home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: /usr/local/lib/libyaml-cpp.a
 /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node: v_test/CMakeFiles/v_test_node.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/g/CLionProjects/Ros_test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/g/CLionProjects/Ros_test/devel/lib/v_test/v_test_node"
 	cd /home/g/CLionProjects/Ros_test/build/v_test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/v_test_node.dir/link.txt --verbose=$(VERBOSE)

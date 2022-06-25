@@ -3,22 +3,24 @@
 //
 #include "v_test/test_node.h"
 using namespace std;
-//estimate_pose estimate_pose;
-//string DATA_PATH = "/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/";
 //boost::format fmt_file("/home/g/Downloads/2011_09_26/2011_09_26_drive_0005_sync/image_02/data/%010d.png");  
 boost::format fmt_file("/home/g/Downloads/07/image_0/%06d.png");
+string file="/home/g/Downloads/test_data/image/";
 //Mat K = (Mat_<double>(3, 3) << 520.9, 0, 325.1, 0, 521.0, 249.7, 0, 0, 1); //相机内参
 Mat K = (Mat_<double>(3, 3) << 707.0912, 0, 601.8873, 0, 707.0912, 183.1104, 0, 0, 1); //相机内参
 String pose_file = "/home/g/CLionProjects/Ros_test/src/v_test/results/VO_result.txt";
-int pose_flag = 0;
+int pose_flag = 1,camera=0;
+bool normal_file = true;
+string file_name;
 int main(int argc,char **argv){
+    if(camera==1){
     cv::VideoCapture cap(0);
     if(cap.isOpened())
     {
         cout<<"camera open success"<<endl;
-        Camera_node.init(argc,argv);
+        Camera_node.init(argc,argv,cap);
     }
-    else cout<<"camera open failed"<<endl;
+    else cout<<"camera open failed"<<endl;}
     if (pose_flag==1){
     fout.open(pose_file);
     int frame_i = 0; // frame number
@@ -35,7 +37,10 @@ int main(int argc,char **argv){
     P = (Mat_<double>(4,4)<<1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
     while (nh.ok()) { // 循环发布图像
         //string file_name = DATA_PATH + "image_02/data/" + ("%010d"%frame).str() + ".png";
-        string file_name = (fmt_file%frame_i).str();
+        if(normal_file)
+        {file_name = file + std::to_string(frame_i) + ".png";}
+        else{
+        file_name = (fmt_file%frame_i).str();}
         cv::Mat image = cv::imread(file_name,0); //读取图像 gray 0 color 1
         if (frame_i==0){
             //init R,t

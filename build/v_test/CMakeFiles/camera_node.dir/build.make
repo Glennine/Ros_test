@@ -164,6 +164,7 @@ camera_node_EXTERNAL_OBJECTS =
 /home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libopencv_superres.so.3.4.16
 /home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libopencv_videostab.so.3.4.16
 /home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libopencv_viz.so.3.4.16
+/home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libyaml-cpp.a
 /home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libopencv_calib3d.so.3.4.16
 /home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libopencv_features2d.so.3.4.16
 /home/g/CLionProjects/Ros_test/devel/lib/libcamera_node.so: /usr/local/lib/libopencv_flann.so.3.4.16

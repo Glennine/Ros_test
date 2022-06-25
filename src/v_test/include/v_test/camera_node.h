@@ -8,9 +8,12 @@
 #include <string>
 #include <stdio.h>
 #include <boost/format.hpp>
+#include "yaml-cpp/yaml.h"
+#include <fstream>
+
 class Camera_node
 {
 public:
         Camera_node(){}
-        int init(int argc,char **argv);
+        int init(int argc,char **argv,cv::VideoCapture cap);
         };

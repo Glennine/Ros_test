@@ -9,6 +9,7 @@ project(v_test)
 ## is used, also find other catkin packages
 LIST( APPEND CMAKE_MODULE_PATH /home/g/C++_library/g2o/cmake_modules )
 SET( G2O_ROOT /usr/local/include/g2o )
+set(yaml-cpp_DIR /usr/local/share/cmake/yaml-cpp)
 find_package(G2O REQUIRED)
 include_directories("/usr/include/eigen3")
 find_package(catkin REQUIRED COMPONENTS
@@ -19,13 +20,14 @@ find_package(catkin REQUIRED COMPONENTS
         sensor_msgs
   image_transport
   cv_bridge
+  yaml-cpp REQUIRED
 )
 #find_package(Sophus REQUIRED)
 include_directories("/usr/local/include/sophus")
 find_package(Glog REQUIRED)
 find_package(FMT REQUIRED)
 set(FMT_LIBRARIES fmt::fmt)
-include_directories(${OpenCV_INCLUDE_DIRS} fmt)
+include_directories(${OpenCV_INCLUDE_DIRS} fmt ${YAML_CPP_INCLUDE_DIR})
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -147,7 +149,7 @@ target_link_libraries(estimate_pose ${catkin_LIBRARIES} ${OpenCV_LIBS} g2o_core 
 set_target_properties(estimate_pose PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/odometry_calculation.h)
 target_link_libraries(odometry_calculation ${catkin_LIBRARIES} ${OpenCV_LIBS} g2o_core g2o_stuff "/usr/local/include/sophus" fmt glog::glog)
 set_target_properties(odometry_calculation PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/odometry_calculation.h)
-target_link_libraries(camera_node ${catkin_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(camera_node ${catkin_LIBRARIES} ${OpenCV_LIBS} yaml-cpp)
 set_target_properties(camera_node PROPERTIES PUBLIC_HEADER include/${PROJECT_NAME}/camera_node.h)
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

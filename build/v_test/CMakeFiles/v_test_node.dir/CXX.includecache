@@ -27,6 +27,10 @@ stdio.h
 -
 boost/format.hpp
 -
+yaml-cpp/yaml.h
+/home/g/CLionProjects/Ros_test/src/v_test/include/v_test/yaml-cpp/yaml.h
+fstream
+-
 
 /home/g/CLionProjects/Ros_test/src/v_test/include/v_test/estimate_pose.h
 opencv2/opencv.hpp
